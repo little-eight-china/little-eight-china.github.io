@@ -395,6 +395,7 @@ valine:
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
+livere_uid: MTAyMC8zODE4Ni8xNDcxNA==
 #livere_uid: your uid
 
 # Gitment
