@@ -81,3 +81,7 @@ deploy:
   type: git
   repository: git@github.com:little-eight-china/little-eight-china.github.io.git
   branch: master
+
+# Support for LiveRe comments system.
+# You can get your uid from https://livere.com/insight/myCode (General web site)
+livere_uid: MTAyMC8zODE4Ni8xNDcxNA==
