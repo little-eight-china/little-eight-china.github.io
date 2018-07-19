@@ -18,7 +18,7 @@ hashmap和concurrenthashmap呢？
 8.volitile的工作原理？
 9.cas知道吗？如何实现？
 10.请至少用4种写法 写一个单例模式
-
+<!--more-->
 **JVM**
 1.介绍一下JVM内存模型、用过什么垃圾回收器？都说说呗？
 2.线上发送频繁full gc如何处理？CPU使用率过高怎么办？
