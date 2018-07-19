@@ -187,11 +187,11 @@ social_icons:
 
 # Blog rolls
 links_icon: link
-links_title: Links
+links_title: 成人链接
 links_layout: block
 #links_layout: inline
-#links:
-  #Title: http://example.com/
+links:
+  acris: https://acris.me/
 
 # Sidebar Avatar
 avatar:
