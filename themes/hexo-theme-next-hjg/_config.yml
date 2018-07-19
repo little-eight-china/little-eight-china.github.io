@@ -8,6 +8,10 @@
 # Useful if you want to comment some options from NexT `_config.yml` by `next.yml` without editing default config.
 override: false
 
+# 文章末尾添加“本文结束”标记
+passage_end_tag:
+  enabled: true
+
 # Allow to cache content generation. Introduced in NexT v6.0.0.
 cache:
   enable: true
@@ -118,13 +122,13 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   home: / || home
-  #about: /about/ || user
-  #tags: /tags/ || tags
-  #categories: /categories/ || th
+#  about: /about/ || user
+  categories: /categories/ || th
+  tags: /tags/ || tags
   archives: /archives/ || archive
-  #schedule: /schedule/ || calendar
-  #sitemap: /sitemap.xml || sitemap
-  #commonweal: /404/ || heartbeat
+#  schedule: /schedule/ || calendar
+#  sitemap: /sitemap.xml || sitemap
+#  commonweal: /404/ || heartbeat
 
 # Enable/Disable menu icons / item badges.
 menu_settings:
