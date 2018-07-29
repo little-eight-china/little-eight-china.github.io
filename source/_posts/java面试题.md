@@ -2,10 +2,9 @@
 title: 测试文章
 date: 2018-07-18 10:59:09
 comments: true
-categories: 分类名
+categories: 杂类
 tags: 
-  - 标签1
-  - 标签2
+  - 
 ---
 # java面试题
 
