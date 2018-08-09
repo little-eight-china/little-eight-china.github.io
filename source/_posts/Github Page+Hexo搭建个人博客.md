@@ -1,5 +1,5 @@
 ﻿---
-title: 第一篇博客
+title: Github Page+Hexo搭建个人博客
 date: 2018-07-16 21:58:09
 categories: 杂类
 tags: 
