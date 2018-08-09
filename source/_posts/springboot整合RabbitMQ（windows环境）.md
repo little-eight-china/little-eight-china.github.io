@@ -26,7 +26,7 @@ tags:
 **5、然后打开命令行（注意要用管理员的身份打开，不然后面会提示错误~）然后输入**
 
 > rabbitmq-plugins.bat enable rabbitmq_management
-
+<!--more-->
 **开启Web管理插件，这样我们就可以通过浏览器来进行管理了，一般情况下这时候已经自动启动RabbitMQ服务了，我们也可以手动启动验证一下，输入**
 
 > net start RabbitMQ
