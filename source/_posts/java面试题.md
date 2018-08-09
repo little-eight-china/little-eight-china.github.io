@@ -1,10 +1,11 @@
 ﻿---
-title: 测试文章
+title: java十道面试题(未包含答案)
 date: 2018-07-18 10:59:09
 comments: true
-categories: 杂类
+categories: 
+  - 杂类
 tags: 
-  - 
+  - cz_wsd
 ---
 # java面试题
 

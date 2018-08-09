@@ -1,14 +1,15 @@
 ﻿---
 title: Github Page+Hexo搭建个人博客
 date: 2018-07-16 21:58:09
-categories: 杂类
+categories: 
+  - 杂类
 tags: 
-  - 
+  - little_eight
 ---
 
 简单介绍怎么搭起这个博客的
 
-### 一、首先执行四条命令（[Hexo官网](https://hexo.io/zh-cn)）
+### 首先执行四条命令（[Hexo官网](https://hexo.io/zh-cn)）
 
 ``` bash
 $ npm install hexo-cli -g
@@ -19,7 +20,7 @@ $ hexo server
 ```
 1、打开你的localhost:4000便可看到初始化的页面
 
-### 二、然后去下主题（现在用的是nexT）
+### 然后去下主题（现在用的是nexT）
 ``` bash
 git clone https://github.com/theme-next/hexo-theme-next.git
 ```
@@ -40,7 +41,7 @@ $ hexo s
 ``` bash
 language: zh-cn
 ``` 
-### 三、上传到github
+### 上传到github
 1、在自己的github上面新建一个repository,然后在repository name里输入你的 “用户名+.github.io”，create
 
 2、在配置_config.yml修改对应的参数
@@ -65,5 +66,5 @@ hexo d
 https://xx.github.io/
 ```
 
-### 四、当然你也可以搞成自动化，参照这个
+### 当然你也可以搞成自动化，参照这个
 [使用 Travis 自动部署 Hexo 到 Github 与 自己的服务器](https://segmentfault.com/a/1190000009054888)

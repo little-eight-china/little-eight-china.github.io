@@ -1,10 +1,13 @@
 ---
 title: springboot整合RabbitMQ（windows环境）
 date: 2018-08-09 17:01:33
-tags:
+categories: 
+  - springboot
+tags: 
+  - little_eight
 ---
 
-### 一、安装 Erlang和RabbitMQ Server ，启动RabbitMQ Server
+### 安装 Erlang和RabbitMQ Server ，启动RabbitMQ Server
 
 **1、安装Erland，通过[官方下载页面](http://www.erlang.org/downloads)获取exe安装包，直接打开并完成安装。(好像要翻墙~自己解决)**
 **2、安装完Erland，配置好它的环境变量，变量值是你自己的安装地址，然后再在path变量加入它**
@@ -27,6 +30,7 @@ tags:
 
 > rabbitmq-plugins.bat enable rabbitmq_management
 <!--more-->
+
 **开启Web管理插件，这样我们就可以通过浏览器来进行管理了，一般情况下这时候已经自动启动RabbitMQ服务了，我们也可以手动启动验证一下，输入**
 
 > net start RabbitMQ
@@ -42,7 +46,7 @@ tags:
 **你可以点击Admin去创建一个新的用户，我下面配置文件就会用到新的用户的用户名跟密码**
 
 -------------------------
-### 二、springboot整合rabbitMQ
+### springboot整合rabbitMQ
 
 **1、新建一个springboot工程，并在`pom.xml` 中引入与rabbitmq有关的依赖**
 ``` xml
