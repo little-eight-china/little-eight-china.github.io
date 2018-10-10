@@ -195,7 +195,34 @@ public class Test<T>{
 
 * 实现Cloneable接口并重写Object类中的clone()方法；
 * 实现Serializable接口，通过对象的序列化和反序列化实现克隆，可以实现真正的深度克隆，代码如下。
+```java
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
+public class MyUtil {
+
+    private MyUtil() {
+        throw new AssertionError();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Serializable> T clone(T obj) throws Exception {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bout);
+        oos.writeObject(obj);
+
+        ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bin);
+        return (T) ois.readObject();
+
+        // 说明：调用ByteArrayInputStream或ByteArrayOutputStream对象的close方法没有任何意义
+        // 这两个基于内存的流只要垃圾回收器清理对象就能够释放资源，这一点不同于对外部资源（如文件流）的释放
+    }
+}
+```
 注意：基于序列化和反序列化实现的克隆不仅仅是深度克隆，更重要的是通过泛型限定，可以检查出要克隆的对象是否支持序列化，这项检查是编译器完成的，不是在运行时抛出异常，这种是方案明显优于使用Object类的clone方法克隆对象。
 ## GC 是什么？为什么要有GC？
 答：GC是垃圾收集的意思，内存处理是编程人员容易出现问题的地方，忘记或者错误的内存回收会导致程序或系统的不稳定甚至崩溃，Java提供的GC功能可以自动监测对象是否超过作用域从而达到自动回收内存的目的，Java语言没有提供释放已分配内存的显示操作方法。Java程序员不用担心内存管理，因为垃圾收集器会自动进行管理。要请求垃圾收集，可以调用下面的方法之一：System.gc() 或Runtime.getRuntime().gc() ，但JVM可以屏蔽掉显示的垃圾回收调用。
@@ -278,9 +305,12 @@ public static String reverse(String str){
 ```
 ## 怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？
 答：代码如下所示:
+```java
 String s1 = "你好";
 String s2 = newString(s1.getBytes("GB2312"), "ISO-8859-1");
-41、日期和时间：
+```
+
+## 日期和时间：
 
 * 如何取得年月日、小时分钟秒？
 * 如何取得从1970年1月1日0时0分0秒到现在的毫秒数？
@@ -294,7 +324,7 @@ System.currentTimeMillis();
 ```
 * 利用java.text.DataFormat 的子类（如SimpleDateFormat类）中的format(Date)方法可将日期格式化。
 
-** 比较一下Java 和JavaSciprt。
+## 比较一下Java 和JavaSciprt。
 答：JavaScript 与Java是两个公司开发的不同的两个产品。Java 是原Sun 公司推出的面向对象的程序设计语言，特别适合于互联网应用程序开发；而JavaScript是Netscape公司的产品，为了扩展Netscape浏览器的功能而开发的一种可以嵌入Web页面中运行的基于对象和事件驱动的解释性语言，它的前身是LiveScript；而Java 的前身是Oak语言。
 下面对两种语言间的异同作如下比较：
 
@@ -355,4 +385,308 @@ Java 通过面向对象的方法进行异常处理，把各种不同的异常进
 * NullPointerException （空指针异常）
 * SecurityException （安全异常）
 ## final, finally, finalize 的区别?
-答：final：修饰符（关键字）有三种用法：如果一个类被声明为final，意味着它不能再派生出新的子类，即不能被继承，因此它和abstract是反义词。将变量声明为final，可以保证它们在使用中不被改变，被声明为final 的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改。被声明为final 的方法也同样只能使用，不能在子类中被重写。finally：通常放在try…catch的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要JVM不关闭都能执行，可以将释放外部资源的代码写在finally块中。finalize：Object类中定义的方法，Java中允许使用finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize() 方法可以整理系统资源或者执行其他清理工作。
+答：
+* final：修饰符（关键字）有三种用法：如果一个类被声明为final，意味着它不能再派生出新的子类，即不能被继承，因此它和abstract是反义词。将变量声明为final，可以保证它们在使用中不被改变，被声明为final 的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改。被声明为final 的方法也同样只能使用，不能在子类中被重写。finally：通常放在try…catch的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要JVM不关闭都能执行，可以将释放外部资源的代码写在finally块中。finalize：Object类中定义的方法，Java中允许使用finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize() 方法可以整理系统资源或者执行其他清理工作。
+* finally：通常放在try…catch…的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要JVM不关闭都能执行，可以将释放外部资源的代码写在finally块中。 
+* finalize：Object类中定义的方法，Java中允许使用finalize()方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize()方法可以整理系统资源或者执行其他清理工作。
+
+## List、Set、Map是否继承自Collection接口？
+答：List、Set 是，Map 不是。Map是键值对映射容器，与List和Set有明显的区别，而Set存储的零散的元素且不允许有重复元素（数学中的集合也是如此），List是线性结构的容器，适用于按数值索引访问元素的情形。
+
+## 阐述ArrayList、Vector、LinkedList的存储性能和特性。 
+
+答：ArrayList 和Vector都是使用数组方式存储数据，此数组元素数大于实际存储的数据以便增加和插入元素，它们都允许直接按序号索引元素，但是插入元素要涉及数组元素移动等内存操作，所以索引数据快而插入数据慢，Vector中的方法由于添加了synchronized修饰，因此Vector是线程安全的容器，但性能上较ArrayList差，因此已经是Java中的遗留容器。LinkedList使用双向链表实现存储（将内存中零散的内存单元通过附加的引用关联起来，形成一个可以按序号索引的线性结构，这种链式存储方式与数组的连续存储方式相比，内存的利用率更高），按序号索引数据需要进行前向或后向遍历，但是插入数据时只需要记录本项的前后项即可，所以插入速度较快。Vector属于遗留容器（Java早期的版本中提供的容器，除此之外，Hashtable、Dictionary、BitSet、Stack、Properties都是遗留容器），已经不推荐使用，但是由于ArrayList和LinkedListed都是非线程安全的，如果遇到多个线程操作同一个容器的场景，则可以通过工具类Collections中的synchronizedList方法将其转换成线程安全的容器后再使用（这是对装潢模式的应用，将已有对象传入另一个类的构造器中创建新的对象来增强实现）。
+
+> 补充：遗留容器中的Properties类和Stack类在设计上有严重的问题，Properties是一个键和值都是字符串的特殊的键值对映射，在设计上应该是关联一个Hashtable并将其两个泛型参数设置为String类型，但是Java API中的Properties直接继承了Hashtable，这很明显是对继承的滥用。这里复用代码的方式应该是Has-A关系而不是Is-A关系，另一方面容器都属于工具类，继承工具类本身就是一个错误的做法，使用工具类最好的方式是Has-A关系（关联）或Use-A关系（依赖）。同理，Stack类继承Vector也是不正确的。Sun公司的工程师们也会犯这种低级错误，让人唏嘘不已。
+
+## Collection和Collections的区别？
+答：Collection是一个接口，它是Set、List等容器的父接口；Collections是个一个工具类，提供了一系列的静态方法来辅助容器操作，这些方法包括对容器的搜索、排序、线程安全化等等。
+
+## List、Map、Set三个接口存取元素时，各有什么特点？ 
+答：List以特定索引来存取元素，可以有重复元素。Set不能存放重复元素（用对象的equals()方法来区分元素是否重复）。Map保存键值对（key-value pair）映射，映射关系可以是一对一或多对一。Set和Map容器都有基于哈希存储和排序树的两种实现版本，基于哈希存储的版本理论存取时间复杂度为O(1)，而基于排序树版本的实现在插入或删除元素时会按照元素或元素的键（key）构成排序树从而达到排序和去重的效果。
+
+## TreeMap和TreeSet在排序时如何比较元素？Collections工具类中的sort()方法如何比较元素？ 
+答：TreeSet要求存放的对象所属的类必须实现Comparable接口，该接口提供了比较元素的compareTo()方法，当插入元素时会回调该方法比较元素的大小。TreeMap要求存放的键值对映射的键必须实现Comparable接口从而根据键对元素进行排序。Collections工具类的sort方法有两种重载的形式，第一种要求传入的待排序容器中存放的对象比较实现Comparable接口以实现元素的比较；第二种不强制性的要求容器中的元素必须可比较，但是要求传入第二个参数，参数是Comparator接口的子类型（需要重写compare方法实现元素的比较），相当于一个临时定义的排序规则，其实就是通过接口注入比较元素大小的算法，也是对回调模式的应用（Java中对函数式编程的支持）。 
+例子代码如下：
+```java
+public class Student implements Comparable<Student> {
+    private String name;        // 姓名
+    private int age;            // 年龄
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Student [name=" + name + ", age=" + age + "]";
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.age - o.age; // 比较年龄(年龄的升序)
+    }
+
+}
+```
+
+```java
+class Test {
+
+    public static void main(String[] args) {
+        Set<Student> set = new TreeSet<>();     // Java 7的钻石语法(构造器后面的尖括号中不需要写类型)
+        set.add(new Student("Hao LUO", 33));
+        set.add(new Student("XJ WANG", 32));
+        set.add(new Student("Bruce LEE", 60));
+        set.add(new Student("Bob YANG", 22));
+
+        for(Student stu : set) {
+            System.out.println(stu);
+        }
+//      输出结果: 
+//      Student [name=Bob YANG, age=22]
+//      Student [name=XJ WANG, age=32]
+//      Student [name=Hao LUO, age=33]
+//      Student [name=Bruce LEE, age=60]
+    }
+}
+```
+
+## Thread类的sleep()方法和对象的wait()方法都可以让线程暂停执行，它们有什么区别? 
+答：sleep()方法（休眠）是线程类（Thread）的静态方法，调用此方法会让当前线程暂停执行指定的时间，将执行机会（CPU）让给其他线程，但是对象的锁依然保持，因此休眠时间结束后会自动恢复（线程回到就绪状态，请参考第66题中的线程状态转换图）。wait()是Object类的方法，调用对象的wait()方法导致当前线程放弃对象的锁（线程暂停执行），进入对象的等待池（wait pool），只有调用对象的notify()方法（或notifyAll()方法）时才能唤醒等待池中的线程进入等锁池（lock pool），如果线程重新获得对象的锁就可以进入就绪状态。
+
+> 补充：可能不少人对什么是进程，什么是线程还比较模糊，对于为什么需要多线程编程也不是特别理解。简单的说：进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动，是操作系统进行资源分配和调度的一个独立单位；线程是进程的一个实体，是CPU调度和分派的基本单位，是比进程更小的能独立运行的基本单位。线程的划分尺度小于进程，这使得多线程程序的并发性高；进程在执行时通常拥有独立的内存单元，而线程之间可以共享内存。使用多线程的编程通常能够带来更好的性能和用户体验，但是多线程的程序对于其他程序是不友好的，因为它可能占用了更多的CPU资源。当然，也不是线程越多，程序的性能就越好，因为线程之间的调度和切换也会浪费CPU时间。时下很时髦的Node.js就采用了单线程异步I/O的工作模式。
+  
+## 线程的sleep()方法和yield()方法有什么区别？ 
+答： 
+* sleep()方法给其他线程运行机会时不考虑线程的优先级，因此会给低优先级的线程以运行的机会；yield()方法只会给相同优先级或更高优先级的线程以运行的机会； 
+* 线程执行sleep()方法后转入阻塞（blocked）状态，而执行yield()方法后转入就绪（ready）状态； 
+* sleep()方法声明抛出InterruptedException，而yield()方法没有声明任何异常； 
+* sleep()方法比yield()方法（跟操作系统CPU调度相关）具有更好的可移植性。
+
+## 当一个线程进入一个对象的synchronized方法A之后，其它线程是否可进入此对象的synchronized方法B？ 
+ 答：不能。其它线程只能访问该对象的非同步方法，同步方法则不能进入。因为非静态方法上的synchronized修饰符要求执行方法时要获得对象的锁，如果已经进入A方法说明对象锁已经被取走，那么试图进入B方法的线程就只能在等锁池（注意不是等待池哦）中等待对象的锁。
+ 
+## 请说出与线程同步以及线程调度相关的方法
+* wait()：使一个线程处于等待（阻塞）状态，并且释放所持有的对象的锁； 
+* sleep()：使一个正在运行的线程处于睡眠状态，是一个静态方法，调用此方法要处理InterruptedException异常； 
+* notify()：唤醒一个处于等待状态的线程，当然在调用此方法的时候，并不能确切的唤醒某一个等待状态的线程，而是由JVM确定唤醒哪个线程，而且与优先级无关； 
+* notityAll()：唤醒所有处于等待状态的线程，该方法并不是将对象的锁给所有线程，而是让它们竞争，只有获得锁的线程才能进入就绪状态；
+
+## 编写多线程程序有几种实现方式？ 
+一种是继承Thread类；另一种是实现Runnable接口。两种方式都要通过重写run()方法来定义线程的行为，推荐使用后者，因为Java中的继承是单继承，一个类有一个父类，如果继承了Thread类就无法再继承其他类了，显然使用Runnable接口更为灵活。
+> 补充：还有就是实现Callable接口，该接口中的call方法可以在线程执行结束时产生一个返回值，代码如下所示：
+## 什么是线程池（thread pool）？ 
+在面向对象编程中，创建和销毁对象是很费时间的，因为创建一个对象要获取内存资源或者其它更多资源。在Java中更是如此，虚拟机将试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。所以提高服务程序效率的一个手段就是尽可能减少创建和销毁对象的次数，特别是一些很耗资源的对象创建和销毁，这就是”池化资源”技术产生的原因。线程池顾名思义就是事先创建若干个可执行的线程放入一个池（容器）中，需要的时候从池中获取线程不用自行创建，使用完毕不需要销毁线程而是放回池中，从而减少创建和销毁线程对象的开销。 
+一些常用的线程池，如下所示：
+* newSingleThreadExecutor：创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。 
+* newFixedThreadPool：创建固定大小的线程池。每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。线程池的大小一旦达到最大值就会保持不变，如果某个线程因为执行异常而结束，那么线程池会补充一个新线程。 
+* newCachedThreadPool：创建一个可缓存的线程池。如果线程池的大小超过了处理任务所需要的线程，那么就会回收部分空闲（60秒不执行任务）的线程，当任务数增加时，此线程池又可以智能的添加新线程来处理任务。此线程池不会对线程池大小做限制，线程池大小完全依赖于操作系统（或者说JVM）能够创建的最大线程大小。 
+* newScheduledThreadPool：创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。 
+* newSingleThreadExecutor：创建一个单线程的线程池。此线程池支持定时以及周期性执行任务的需求。
+
+## 简述synchronized 和java.util.concurrent.locks.Lock的异同？ 
+Lock 能完成synchronized所实现的所有功能；主要不同点：Lock有比synchronized更精确的线程语义和更好的性能，而且不强制性的要求一定要获得锁。synchronized会自动释放锁，而Lock一定要求程序员手工释放，并且最好在finally 块中释放（这是释放外部资源的最好的地方）。
+
+## Java中如何实现序列化，有什么意义？ 
+答：序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决对象流读写操作时可能引发的问题（如果不进行序列化可能会存在数据乱序的问题）。 
+要实现序列化，需要让一个类实现Serializable接口，该接口是一个标识性接口，标注该类对象是可被序列化的，然后使用一个输出流来构造一个对象输出流并通过writeObject(Object)方法就可以将实现对象写出（即保存其状态）；如果需要反序列化则可以用一个输入流建立对象输入流，然后通过readObject方法从流中读取对象。序列化除了能够实现对象的持久化之外，还能够用于对象的深度克隆
+
+## Java中有几种类型的流？ 
+答：字节流和字符流。字节流继承于InputStream、OutputStream，字符流继承于Reader、Writer。在java.io 包中还有许多其他的流，主要是为了提高性能和使用方便。关于Java的I/O需要注意的有两点：一是两种对称性（输入和输出的对称性，字节和字符的对称性）；二是两种设计模式（适配器模式和装潢模式）。另外Java中的流不同于C#的是它只有一个维度一个方向。
+
+## 如何用Java代码列出一个目录下所有的文件？ 
+如果只要求列出当前文件夹下的文件，代码如下所示：
+```java
+class Test {
+
+    public static void main(String[] args) {
+        File f = new File("/Users/Downloads");
+        for(File temp : f.listFiles()) {
+            if(temp.isFile()) {
+                System.out.println(temp.getName());
+            }
+        }
+    }
+}
+```
+如果需要对文件夹继续展开，代码如下所示：
+```java
+
+class Test {
+
+    public static void main(String[] args) {
+        showDirectory(new File("/Users/Downloads"));
+    }
+
+    public static void showDirectory(File f) {
+        _walkDirectory(f, 0);
+    }
+
+    private static void _walkDirectory(File f, int level) {
+        if(f.isDirectory()) {
+            for(File temp : f.listFiles()) {
+                _walkDirectory(temp, level + 1);
+            }
+        }
+        else {
+            for(int i = 0; i < level - 1; i++) {
+                System.out.print("\t");
+            }
+            System.out.println(f.getName());
+        }
+    }
+}
+```
+## 什么是DAO模式？
+答：DAO（Data Access Object）顾名思义是一个为数据库或其他持久化机制提供了抽象接口的对象，在不暴露底层持久化方案实现细节的前提下提供了各种数据访问操作。在实际的开发中，应该将所有对数据源的访问操作进行抽象化后封装在一个公共API中。用程序设计语言来说，就是建立一个接口，接口中定义了此应用程序中将会用到的所有事务方法。在这个应用程序中，当需要和数据源进行交互的时候则使用这个接口，并且编写一个单独的类来实现这个接口，在逻辑上该类对应一个特定的数据存储。DAO模式实际上包含了两个模式，一是Data Accessor（数据访问器），二是Data Object（数据对象），前者要解决如何访问数据的问题，而后者要解决的是如何用对象封装数据。
+
+## 事务的ACID是指什么？ 
+
+答： 
+* 原子性(Atomic)：事务中各项操作，要么全做要么全不做，任何一项操作的失败都会导致整个事务的失败； 
+* 一致性(Consistent)：事务结束后系统状态是一致的； 
+* 隔离性(Isolated)：并发执行的事务彼此无法看到对方的中间状态； 
+* 持久性(Durable)：事务完成后所做的改动都会被持久化，即使发生灾难性的失败。通过日志和同步备份可以在故障发生后重建数据。
+> 补充：关于事务，在面试中被问到的概率是很高的，可以问的问题也是很多的。首先需要知道的是，只有存在并发数据访问时才需要事务。当多个事务访问同一数据时，可能会存在5类问题，包括3类数据读取问题（脏读、不可重复读和幻读）和2类数据更新问题（第1类丢失更新和第2类丢失更新）。
+
+## 简述正则表达式及其用途。 
+答：在编写处理字符串的程序时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。
+> 说明：计算机诞生初期处理的信息几乎都是数值，但是时过境迁，今天我们使用计算机处理的信息更多的时候不是数值而是字符串，正则表达式就是在进行字符串匹配和处理的时候最为强大的工具，绝大多数语言都提供了对正则表达式的支持。
+
+## Java中是如何支持正则表达式操作的？ 
+答：Java中的String类提供了支持正则表达式操作的方法，包括：matches()、replaceAll()、replaceFirst()、split()。此外，Java中可以用Pattern类表示正则表达式对象，它提供了丰富的API进行各种正则表达式操作，请参考下面面试题的代码。
+
+> 面试题： - 如果要从字符串中截取第一个英文左括号之前的字符串，例如：北京市(朝阳区)(西城区)(海淀区)，截取结果为：北京市，那么正则表达式怎么写？
+```java
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+class RegExpTest {
+
+    public static void main(String[] args) {
+        String str = "北京市(朝阳区)(西城区)(海淀区)";
+        Pattern p = Pattern.compile(".*?(?=\\()");
+        Matcher m = p.matcher(str);
+        if(m.find()) {
+            System.out.println(m.group());
+        }
+    }
+}
+```
+## 获得一个类的类对象有哪些方式？ 
+答： 
+* 类型.class，例如：String.class 
+* 对象.getClass()，例如："hello".getClass() 
+* Class.forName()，例如：Class.forName("java.lang.String")
+## 如何通过反射创建对象？ 
+答： 
+* 通过类对象调用newInstance()方法，例如：String.class.newInstance() 
+* 通过类对象的getConstructor()或getDeclaredConstructor()方法获得构造器（Constructor）对象并调用其newInstance()方法创建对象，例如：String.class.getConstructor(String.class).newInstance("Hello");
+ 
+## 如何通过反射调用对象的方法？ 
+答：请看下面的代码：
+```java
+import java.lang.reflect.Method;
+
+class MethodInvokeTest {
+
+    public static void main(String[] args) throws Exception {
+        String str = "hello";
+        Method m = str.getClass().getMethod("toUpperCase");
+        System.out.println(m.invoke(str));  // HELLO
+    }
+}
+```
+## 简述一下你了解的设计模式。 
+答：所谓设计模式，就是一套被反复使用的代码设计经验的总结（情境中一个问题经过证实的一个解决方案）。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。设计模式使人们可以更加简单方便的复用成功的设计和体系结构。将已证实的技术表述成设计模式也会使新系统开发者更加容易理解其设计思路。 
+在GoF的《Design Patterns: Elements of Reusable Object-Oriented Software》中给出了三类（创建型[对类的实例化过程的抽象化]、结构型[描述如何将类或对象结合在一起形成更大的结构]、行为型[对在不同的对象之间划分责任和算法的抽象化]）共23种设计模式，包括：Abstract Factory（抽象工厂模式），Builder（建造者模式），Factory Method（工厂方法模式），Prototype（原始模型模式），Singleton（单例模式）；Facade（门面模式），Adapter（适配器模式），Bridge（桥梁模式），Composite（合成模式），Decorator（装饰模式），Flyweight（享元模式），Proxy（代理模式）；Command（命令模式），Interpreter（解释器模式），Visitor（访问者模式），Iterator（迭代子模式），Mediator（调停者模式），Memento（备忘录模式），Observer（观察者模式），State（状态模式），Strategy（策略模式），Template Method（模板方法模式）， Chain Of Responsibility（责任链模式）。 
+面试被问到关于设计模式的知识时，可以拣最常用的作答，例如： 
+* 工厂模式：工厂类可以根据条件生成不同的子类实例，这些子类有一个公共的抽象父类并且实现了相同的方法，但是这些方法针对不同的数据进行了不同的操作（多态方法）。当得到子类的实例后，开发人员可以调用基类中的方法而不必考虑到底返回的是哪一个子类的实例。 
+* 代理模式：给一个对象提供一个代理对象，并由代理对象控制原对象的引用。实际开发中，按照使用目的的不同，代理可以分为：远程代理、虚拟代理、保护代理、Cache代理、防火墙代理、同步化代理、智能引用代理。 
+* 适配器模式：把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起使用的类能够一起工作。 
+* 模板方法模式：提供一个抽象类，将部分逻辑以具体方法或构造器的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法（多态实现），从而实现不同的业务逻辑。 
+除此之外，还可以讲讲上面提到的门面模式、桥梁模式、单例模式、装潢模式（Collections工具类和I/O系统中都使用装潢模式）等，反正基本原则就是拣自己最熟悉的、用得最多的作答，以免言多必失。
+
+## 用Java写一个单例类。 
+饿汉式单例:
+```java
+public class Singleton {
+    private Singleton(){}
+    private static Singleton instance = new Singleton();
+    public static Singleton getInstance(){
+        return instance;
+    }
+}
+
+```
+
+懒汉式单例:
+```java
+public class Singleton {
+    private static Singleton instance = null;
+    private Singleton() {}
+    public static synchronized Singleton getInstance(){
+        if (instance == null) instance ＝ new Singleton();
+        return instance;
+    }
+}
+
+```
+## 什么是UML？ 
+答：UML是统一建模语言（Unified Modeling Language）的缩写，它发表于1997年，综合了当时已经存在的面向对象的建模语言、方法和过程，是一个支持模型化和软件系统开发的图形化语言，为软件开发的所有阶段提供模型化和可视化支持。使用UML可以帮助沟通与交流，辅助应用设计和文档的生成，还能够阐释系统的结构和行为。
+
+## UML中有哪些常用的图？ 
+UML定义了多种图形化的符号来描述软件系统部分或全部的静态结构和动态结构，包括：用例图（use case diagram）、类图（class diagram）、时序图（sequence diagram）、协作图（collaboration diagram）、状态图（statechart diagram）、活动图（activity diagram）、构件图（component diagram）、部署图（deployment diagram）等。在这些图形化符号中，有三种图最为重要，分别是：用例图（用来捕获需求，描述系统的功能，通过该图可以迅速的了解系统的功能模块及其关系）、类图（描述类以及类与类之间的关系，通过该图可以快速了解系统）、时序图（描述执行特定任务时对象之间的交互关系以及执行顺序，通过该图可以了解对象能接收的消息也就是说对象能够向外界提供的服务）。
+
+## 用Java写一个折半查找。 
+答：折半查找，也称二分查找、二分搜索，是一种在有序数组中查找某一特定元素的搜索算法。搜素过程从数组的中间元素开始，如果中间元素正好是要查找的元素，则搜素过程结束；如果某一特定元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半中查找，而且跟开始一样从中间元素开始比较。如果在某一步骤数组已经为空，则表示找不到指定的元素。这种搜索算法每一次比较都使搜索范围缩小一半，其时间复杂度是O(logN)。
+
+```java
+public class MyUtil {
+
+   public static <T extends Comparable<T>> int binarySearch(T[] x, T key) {
+      return binarySearch(x, 0, x.length- 1, key);
+   }
+
+   // 使用循环实现的二分查找
+   public static <T> int binarySearch(T[] x, T key, Comparator<T> comp) {
+      int low = 0;
+      int high = x.length - 1;
+      while (low <= high) {
+          int mid = (low + high) >>> 1;
+          int cmp = comp.compare(x[mid], key);
+          if (cmp < 0) {
+            low= mid + 1;
+          }
+          else if (cmp > 0) {
+            high= mid - 1;
+          }
+          else {
+            return mid;
+          }
+      }
+      return -1;
+   }
+
+   // 使用递归实现的二分查找
+   private static<T extends Comparable<T>> int binarySearch(T[] x, int low, int high, T key) {
+      if(low <= high) {
+        int mid = low + ((high -low) >> 1);
+        if(key.compareTo(x[mid])== 0) {
+           return mid;
+        }
+        else if(key.compareTo(x[mid])< 0) {
+           return binarySearch(x,low, mid - 1, key);
+        }
+        else {
+           return binarySearch(x,mid + 1, high, key);
+        }
+      }
+      return -1;
+   }
+}
+
+```
