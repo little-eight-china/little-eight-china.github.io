@@ -33,7 +33,7 @@ cd -		切换到上一个所在目录
 ## 目录的操作命令
 ### 增加目录操作
 命令：mkdir 目录名称
-示例：在根目录 / 下 mkdir test，就会在根目录 / 下产生一个test问目录
+示例：在根目录 / 下 mkdir test，就会在根目录 /下产生一个test问目录
 ![Alt](http://pd6p053wl.bkt.clouddn.com/add.png)
 ### 查看目录
 命令：ls [-al] 父目录
