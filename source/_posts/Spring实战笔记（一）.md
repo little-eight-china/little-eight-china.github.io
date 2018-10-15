@@ -101,10 +101,9 @@ public class BeanConfig{
 ```xml
 <bean id="beanA" class="com.BeanA"/>
 ```
-
 ### 小结
 建议使用自动化配置，减少维护成本。
-
+<!--more-->
 ## 高技装配
 
 ### @Primary
