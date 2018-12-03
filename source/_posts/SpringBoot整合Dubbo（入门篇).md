@@ -277,3 +277,6 @@ spring:
 #### 最后先启动服务端，再启动消费端。
 
 [点击访问](http://localhost:8082),页面输出Hello World即为成功。
+
+#### 源码地址
+[github源码](https://github.com/little-eight-china/springboot-project/tree/master/springboot-dubbo)
