@@ -30,7 +30,7 @@ wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.t
 dataDir=/粘贴你自己zookeeper的目录/data
 dataLogDir=/粘贴你自己zookeeper的目录/logs
 ```
-
+<!--more-->
 * 返回zookeeper根目录，进入bin，然后运行以下代码
 
 ```
