@@ -1,5 +1,5 @@
 ---
-title: '''Linux命令大全'''
+title: Linux命令大全
 date: 2018-12-28 19:33:41
 categories: 
   - 杂类
