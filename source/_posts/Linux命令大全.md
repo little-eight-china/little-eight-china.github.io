@@ -45,7 +45,8 @@ tags:
 * -l 或--list-shells 列出目前系统可用的 shell 清单。
 * -u 或--help 在线帮助。
 * -v 或-version 显示版本信息。
-* 
+
+<!-- more -->
 ### date
 
 **功能说明**：显示或设置系统时间与日期。
