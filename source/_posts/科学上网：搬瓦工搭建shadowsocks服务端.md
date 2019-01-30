@@ -7,13 +7,13 @@ tags:
   - cz_wsd
 ---
 
-###前言
+### 前言
 Shadowsocks，中文名影梭，使用socks5代理，在中国大陆广泛用于翻墙，速度比 pptp和OpenVPN 要快，是一款翻墙必备神器。
 
-###VPS
+### VPS
 Shadowsocks的正常使用需要服务器端，其实，所有的翻墙软件都是通过服务器端，而搭建服务器端，你就需要有自己的VPS，所以第一步你就是需要购买一个自己的VPS(或者你可以跟别人合租)，现在普遍使用的搭建服务器端的vps主要包括3种，一个是Linode，一个是DigitalOcean，一个是BandwagonHOST(搬瓦工)，这是从价格，性能等方面做出的推荐。
 
-###搬瓦工
+### 搬瓦工
 搬瓦工VPS是一款性价比较高的便宜VPS主机，且适合入门级网友学习Linux和建站用途。（具体可在[搬瓦工VPS中文网](http://banwagong.cn/)查看） 
 一、选择对应且需要的VPS方案
 ![这里写图片描述](https://img-blog.csdn.net/20180821233117700?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N6X3dzZA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
@@ -35,14 +35,14 @@ Shadowsocks的正常使用需要服务器端，其实，所有的翻墙软件都
 目前只支持Paypal付款，所以我们需要有账户，如果没有可以注册，且可以用账户余额，也可以绑定信用卡、银联支付
 ![这里写图片描述](http://banwagong.cn/images/jiaocheng-4.jpg)
 稍等一分钟左右，我们登录搬瓦工账户后台，就可以看到已经成功后买到的VPS主机，我们可以登录面板使用。
-###使用
+### 使用
 点击 “KiwiVM Control Panel” 进入 VPS 控制面板。
 ![这里写图片描述](http://s15.sinaimg.cn/mw690/006QTR5ezy7htKLALh4ae&690)
 接下来，使用xshell进行连接。
 
 > 温馨提示：如果出现死活连接不上linode的情况，可以ping一下你的Ip，看是否能ping通，如果ping不通，可能是你的ip已经被墙了，建议你删除此vps，重新建一个，或者在Linode中申请更换Ip的工单！
 
-###Shadowsocks服务端搭建
+### Shadowsocks服务端搭建
 1.环境安装与更新
 这一步，需要做的是依次执行下面的每条命令：
 > yum install epel-release
@@ -57,7 +57,7 @@ pip install shadowsocks
 
 执行上述命令后，此时的你已经进入文件编辑模式，这是你创建的一个新的空白文件，你需要做的事情就是将下面的内容粘贴后复制到shadowsocks.json文件里：
 
-######单用户配置：
+###### 单用户配置：
 > {
     "server":"your_server_ip", 
     "server_port":8388,
@@ -77,7 +77,7 @@ timeout：超时时间（秒）
 method：加密方法，可选择 “bf-cfb”, “aes-256-cfb”, “des-cfb”, “rc4”, 等等。默认是一种不安全的加密，推荐用 “aes-256-cfb” 
 fast_open：true 或 false 
 works：works数量，默认为 1
-######多用户配置：
+###### 多用户配置：
 
 > {
  "server":"my_server_ip"，
@@ -93,13 +93,13 @@ works：works数量，默认为 1
  "method":"aes-256-cfb",
  "fast_open": false
 }
-######启动
+###### 启动
 > ssserver -c /etc/shadowsocks.json -d start #启动 
 ssserver -c /etc/shadowsocks.json -d stop #停止
-######启动
+###### 启动
 日志文件路径：/var/log/shadowsocks.log
 
-###配置自动启动
+### 配置自动启动
 编辑/etc/supervisord.conf文件，命令如下：
 
 > vi /etc/supervisord.conf
