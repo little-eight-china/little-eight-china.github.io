@@ -42,7 +42,7 @@ Docker 镜像（Image），就相当于是一个 root 文件系统，它除了�
 * Docker 镜像仓库地址：地址的格式一般是 <域名/IP>[:端口号] 。默认地址是 Docker Hub。
 * 仓库名：如之前所说，这里的仓库名是两段式名称，即<用户名>/<软件名>。对于DockerHub，如果不给出用户名，则默认为 library ，也就是官方镜像。
 比如
-<!-more-->
+<!--more-->
 > $ docker pull ubuntu:18.04
 18.04: Pulling from library/ubuntu
 bf5d46315322: Pull complete

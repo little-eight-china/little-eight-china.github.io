@@ -40,7 +40,7 @@ Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 N
 下载完成之后，解压。根据不同平台，执行不同命令。本人windows，直接点击bin包下的startup.cmd
 
 启动完成之后，访问：http://127.0.0.1:8848/nacos/，默认账号密码均为nacos，进入Nacos的服务管理页面，如下图
-![图片1](http://m.qpic.cn/psb?/V10I7pAv28bqXz/FRliIMZ6Ky1H.7VQ7sO0eA57sEryF7oUAD5xjnHQoto!/b/dFIBAAAAAAAA&bo=VwevAQAAAAARF94!&rf=viewer_4)
+![图片1](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/nacos/1.jpg?raw=true)
 ### 创建服务提供和消费者
 
 #### 项目架构
@@ -139,7 +139,7 @@ SpringApplication.run(NacosServerApplication.class, args);
 ```
 
 * 启动，如果控制台日志看到如下说明注册成功 即可在nacos的管理界面看到我们的服务注册了上去，你可以点击详情查看服务的具体信息。此时还可以改下端口开2个服务，后面做负载均衡的测试
-![图片2](http://m.qpic.cn/psb?/V10I7pAv28bqXz/Qx45qPIDBJt2GzSQ3DWb*mQIWIUtJrqksyULq.a9KQ4!/b/dDUBAAAAAAAA&bo=YwcfAgAAAAARF1k!&rf=viewer_4)
+![图片2](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/nacos/2.jpg?raw=true)
 ```
 o.s.c.a.n.registry.NacosServiceRegistry  : nacos registry, nacos-client 192.168.96.122:8090 register finished
 ```

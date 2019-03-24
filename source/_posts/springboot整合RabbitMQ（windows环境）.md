@@ -14,9 +14,6 @@ tags:
 
 > %ERLANG_HOME%\bin
 
-![这里写图片描述](http://pd6p053wl.bkt.clouddn.com/erland%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png)
-
-![这里写图片描述](http://pd6p053wl.bkt.clouddn.com/e%E5%8F%98%E9%87%8F2.jpg)
 
 **3、然后再安装[RabbitMQ服务端](https://www.rabbitmq.com/download.html),注意如果下载高版本的，对erland的版本也是有要求的，当然你两者都下最新的就没问题了。**
 
@@ -25,7 +22,6 @@ tags:
 
 > %RABBITMQ_SERVER%\sbin
 
-![这里写图片描述](http://pd6p053wl.bkt.clouddn.com/r1.jpg)
 **5、然后打开命令行（注意要用管理员的身份打开，不然后面会提示错误~）然后输入**
 
 > rabbitmq-plugins.bat enable rabbitmq_management
@@ -34,9 +30,6 @@ tags:
 **开启Web管理插件，这样我们就可以通过浏览器来进行管理了，一般情况下这时候已经自动启动RabbitMQ服务了，我们也可以手动启动验证一下，输入**
 
 > net start RabbitMQ
-
-**如果是下图则已启动**
-![这里写图片描述](http://pd6p053wl.bkt.clouddn.com/%E5%B7%B2%E5%90%AF%E5%8A%A8r1.jpg)
 **要关闭服务的话，输入**
 >net stop RabbitMQ
 
@@ -154,19 +147,19 @@ public class RabbitMQTest {
 ```
 
 **7、先启动主程序`RabbitmqApplication`,我这边碰到一个错误**
-![](http://pd6p053wl.bkt.clouddn.com/%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%BF%90%E8%A1%8C%E5%A4%B1%E8%B4%A5.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/1.jpg?raw=true)
 **原来是没给admin这个用户设置管理队列的权限，去set一把即可**
-![](http://pd6p053wl.bkt.clouddn.com/%E8%AE%BE%E7%BD%AEuser%E6%9D%83%E9%99%90.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/2.jpg?raw=true)
 
 **再次运行主程序，成功连接RabbitMQ**
-![](http://pd6p053wl.bkt.clouddn.com/%E8%BF%9E%E6%8E%A5ra%E6%88%90%E5%8A%9F.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/3.jpg?raw=true)
 
 **8、去run我们的测试用例方法，看到控制台输出，表示成功**
-![](http://pd6p053wl.bkt.clouddn.com/%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/4.jpg?raw=true)
 **再切换回主程序，也可以看到输出日志**
-![](http://pd6p053wl.bkt.clouddn.com/%E6%94%B6%E5%88%B0%E6%B6%88%E6%81%AF.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/5.jpg?raw=true)
 **当然我们在RabbitMQ的页面上也可以看到队列的消费信息记录**
-![](http://pd6p053wl.bkt.clouddn.com/%E5%90%8E%E5%8F%B0%E7%9C%8B%E5%88%B0.jpg)
+![](https://raw.githubusercontent.com/little-eight-china/image/master/bdbk/rabbitmq/6.jpg?raw=true)
 
 --------------
 #### 以上便是springboot对RabbitMQ的消息生产和消费的最简单的整合，想了解更多请查阅[RabbitMQ](https://www.rabbitmq.com/)官网
