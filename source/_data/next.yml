@@ -38,3 +38,7 @@ vendors:
   lazyload: https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js
   fontawesome: https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css
   quicklink: https://cdn.jsdelivr.net/npm/quicklink@1.0.0/dist/quicklink.umd.js
+
+# 文章末尾添加“本文结束”标记
+passage_end_tag:
+  enabled: true
