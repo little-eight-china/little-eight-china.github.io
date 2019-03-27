@@ -8,6 +8,7 @@ branches:
   - dev
 # tarvis生命周期执行顺序详见官网文档
 before_install:
+- git submodule update --init --recursive
 - git config --global user.name "little-eight"
 - git config --global user.email "295928126@qq.com"
 - npm install -g hexo-cli
