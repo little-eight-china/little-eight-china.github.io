@@ -79,8 +79,8 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-    repository: git@github.com:little-eight-china/little-eight-china.github.io.git
-    branch: master
+  repository: git@github.com:little-eight-china/little-eight-china.github.io.git
+  branch: master
 
 # Plugin Configuration
 # hexo-generator-sitemap
