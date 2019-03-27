@@ -1,0 +1,40 @@
+menu:
+  home: / || home
+  archives: /archives/ || archive
+  categories: /categories/ || th
+  tags: /tags/ || tags
+
+menu_settings:
+  badges: true
+
+scheme: Gemini
+
+social:
+  GitHub: https://github.com/little-eight-china || github
+  CSDN: https://blog.csdn.net/h295928126 || crosshairs
+
+links_title: 成人链接
+links:
+  Acris' Blog: https://acris.me/
+
+quicklink: true
+
+livere_uid: MTAyMC8zODE4Ni8xNDcxNA==
+
+local_search:
+  enable: true
+
+fancybox: true
+
+fastclick: true
+
+lazyload: true
+
+vendors:
+  jquery: https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js
+  fancybox: https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js
+  fancybox_css: https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css
+  fastclick: https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js
+  lazyload: https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js
+  fontawesome: https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css
+  quicklink: https://cdn.jsdelivr.net/npm/quicklink@1.0.0/dist/quicklink.umd.js
