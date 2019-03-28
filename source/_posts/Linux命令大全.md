@@ -1,3 +1,6 @@
+
+
+
 ---
 title: Linux命令大全
 date: 2018-12-28 19:33:41
@@ -14,7 +17,10 @@ tags:
 ### adduser
 
 **功能说明**：新增用户帐号。
-**语 法**：adduser
+**语 法**：
+```
+adduser
+```
 **补充说明**：在 Slackware 中，adduser 指令是个 script 程序，利用交谈的方式取得
 输入的用户帐号资料，然后再交由真正建立帐号的 useradd 指令建立新用户，如
 此可方便管理员建立用户帐号。在 Red Hat Linux 中，adduser 指令则是 useradd
@@ -22,7 +28,10 @@ tags:
 
 ### chfn(change finger information)
 **功能说明**：改变 finger 指令显示的信息。
-**语 法**：chfn [-f <真实姓名>][-h <家中电话>][-o <办公地址>][-p <办公电话>][-uv][帐号名称]
+**语 法**：
+```
+chfn [-f <真实姓名>][-h <家中电话>][-o <办公地址>][-p <办公电话>][-uv][帐号名称]
+```
 **补充说明**：chfn 指令可用来更改执行 finger 指令时所显示的信息，这些信息都存
 放在/etc 目录里的 asswd 文件里。若不指定任何参数，则 chfn 指令会进入问答式
 界面。
@@ -36,7 +45,10 @@ tags:
 * -v 或-version 显示版本信息。
 ### chsh(change shell)
 **功能说明**：更换登入系统时使用的 shell。
-**语 法**：chsh [-luv][-s <shell 名称>][用户名称]
+**语 法**：
+```
+chsh [-luv][-s <shell 名称>][用户名称]
+```
 **补充说明**：每位用户在登入系统时，都会拥有预设的 shell 环境，这个指令可更
 改其预设值。若不指定任何参数与用户名称，则 chsh 会以应答的方式进行设置。
 **参 数**：
@@ -52,9 +64,10 @@ tags:
 **功能说明**：显示或设置系统时间与日期。
 
 **语 法**：
+```
 date [-d < 字符串>][-u][+%H%I%K%l%M%P%r%s%S%T%X%Z%a%A%b%B%c%d%D%j%m%U
 %w%x%y%Y%n%t] 或 date [-s < 字符串>][-u][MMDDhhmmCCYYss] 或 date [--help][--version]
-
+```
 **补充说明**：第一种语法可用来显示系统日期或时间，以%为开头的参数为格式参
 数，可指定日期或时间的显示格式。第二种语法可用来设置系统日期与时间。只
 有管理员才有设置日期与时间的权限。若不加任何参数，data 会显示目前的日期
@@ -106,13 +119,19 @@ date [-d < 字符串>][-u][+%H%I%K%l%M%P%r%s%S%T%X%Z%a%A%b%B%c%d%D%j%m%U
 ### exit
 **功能说明**：退出目前的 shell。
 
-**语 法**：exit [状态值]
+**语 法**：
+```
+exit [状态值]
+```
 **补充说明**：执行 exit 可使 shell 以指定的状态值退出。若不设置状态值参数，则
 shell 以预设值退出。状态值 0 代表执行成功，其他值代表执行失败。exit 也可用
 在 script，离开正在执行的 script，回到 shell。
 ### finger
 **功能说明**：查找并显示用户信息。
-**语 法**：finger [-lmsp][帐号名称...]
+**语 法**：
+```
+finger [-lmsp][帐号名称...]
+```
 **补充说明**：finger 指令会去查找，并显示指定帐号的用户相关信息，
 包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独
 执行 finger 指令，它会显示本地主机现在所有的用户的登陆信息，包
@@ -132,7 +151,10 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### free
 **功能说明**：显示内存状态。
-**语 法**： free [-bkmotV][-s <间隔秒数>]
+**语 法**：
+```
+free [-bkmotV][-s <间隔秒数>]
+```
 **补充说明**：free 指令会显示内存的使用情况，包括实体内存，虚拟的交换文件内
 存，共享内存区段，以及系统核心使用的缓冲区等。
 **参 数**：
@@ -147,8 +169,11 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### gitps(gnu interactive tools process status)
 **功能说明**：报告程序状况。
-**语 法**：gitps [acefgjlnrsSTuvwxX][p <程序识别码>][t <终端机编号>][U <帐号
+**语 法**：
+```
+gitps [acefgjlnrsSTuvwxX][p <程序识别码>][t <终端机编号>][U <帐号
 名称>]
+```
 **补充说明**：gitps 是用来报告并管理程序执行的指令，基本上它就是通过 ps 指令
 来报告，管理程序，也能通过 gitps 指令随时中断，删除不必要的程序。因为 gitps
 指令会去执行 ps 指令，所以其参数和 ps 指令相当类似。
@@ -178,12 +203,18 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### groupdel(group delete)
 **功能说明**：删除群组。
-**语 法**：groupdel [群组名称]
+**语 法**：
+```
+groupdel [群组名称]
+```
 **补充说明**：需要从系统上删除群组时，可用 groupdel 指令来完成这项工作。倘若
 该群组中仍包括某些用户，则必须先删除这些用户后，方能删除群组。
 ### groupmod(group modify)
 **功能说明**：更改群组识别码或名称。
-**语 法**：groupmod [-g <群组识别码> <-o>][-n <新群组名称>][群组名称]
+**语 法**：
+```
+groupmod [-g <群组识别码> <-o>][-n <新群组名称>][群组名称]
+```
 **补充说明**：需要更改群组的识别码或名称时，可用 groupmod 指令来完成这项工作。
 **参 数**：
 
@@ -193,7 +224,11 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### id
 **功能说明**：显示用户的 ID，以及所属群组的 ID。
-**语 法**：id [-gGnru][--help][--version][用户名称]
+**语 法**：
+```
+id [-gGnru][--help][--version][用户名称]
+```
+
 **补充说明**：id 会显示用户以及所属群组的实际与有效 ID。若两个 ID 相同，则仅
 显示实际 ID。若仅指定用户名称，则显示目前用户的 ID。
 **参 数**：
@@ -208,7 +243,11 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### kill
 **功能说明**：删除执行中的程序或工作。
-**语 法**：kill [-s <信息名称或编号>][程序] 或 kill [-l <信息编号>]
+**语 法**：
+```
+kill [-s <信息名称或编号>][程序] 或 kill [-l <信息编号>]
+```
+
 **补充说明**：kill 可将指定的信息送至程序。预设的信息为 SIGTERM(15)，可将指
 定程序终止。若仍无法终止该程序，可使用 SIGKILL(9)信息尝试强制删除程序。
 程序或工作的编号可利用 ps 指令或 jobs 指令查看。
@@ -220,9 +259,13 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### ps(process status)
 **功能说明**：报告程序状况。
-**语 法**：ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C <指令名称>][-g <群组
+**语 法**：
+```
+ps [-aAcdefHjlmNVwy][acefghLnrsSTuvxX][-C <指令名称>][-g <群组
 名称>][-G <群组识别码>][-p <程序识别码>][p <程序识别码>][-s <阶段作业>][-t <终端机编号>][t <终端机编号>][-u <用户识别码>][-U <用户识别码>][U <
 用户名称>][-<程序识别码>][--cols <每列字符数>][--columns <每列字符数>][--cumulative][--deselect][--forest][--headers][--help][--info][--lines < 显示列数>][--no-headers][--group <群组名称>][-Group <群组识别码>][--pid <程序识别码>][--rows <显示列数>][--sid <阶段作业>][--tty <终端机编号>][--user <用户名称>][--User <用户识别码>][--version][--width <每列字符数>] 
+```
+
 **补充说明**：ps 是用来报告程序执行状况的指令，您可以搭配 kill 指令随时中断，
 删除不必要的程序。
 **参 数**：
@@ -302,7 +345,11 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### pstree(process status tree)
 **功能说明**：以树状图显示程序。
-**语 法**：pstree [-acGhlnpuUV][-H <程序识别码>][<程序识别码>/<用户名称>]
+**语 法**：
+```
+pstree [-acGhlnpuUV][-H <程序识别码>][<程序识别码>/<用户名称>]
+```
+
 **补充说明**：pstree 指令用 ASCII 字符显示树状结构，清楚地表达程序间的相互关
 系。如果不指定程序识别码或用户名称，则会把系统启动时的第一个程序视为基
 层，并显示之后的所有程序。若指定用户名称，便会以隶属该用户的第一个程序
@@ -324,7 +371,10 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### su(super user)
 **功能说明**：变更用户身份。
-**语 法**：su [-flmp][--help][--version][-][-c <指令>][-s <shell>][用户帐号]
+**语 法**：
+```
+su [-flmp][--help][--version][-][-c <指令>][-s <shell>][用户帐号]
+```
 **补充说明**：su 可让用户暂时变更登入的身份。变更时须输入所要变更的用户帐
 号与密码。
 **参 数**：
@@ -340,7 +390,11 @@ shell 以预设值退出。状态值 0 代表执行成功，其他值代表执�
 
 ### sudo
 **功能说明：以其他身份来执行指令。**
-**语 法**：sudo [-bhHpV][-s <shell>][-u <用户>][指令] 或 sudo [-klv]
+**语 法**：
+```
+sudo [-bhHpV][-s <shell>][-u <用户>][指令] 或 sudo [-klv]
+```
+
 **补充说明**：sudo 可让用户以其他的身份来执行指定的指令，预设的身份为 root。
 在/etc/sudoers 中设置了可执行 sudo 指令的用户。若其未经授权的用户企图使用
 sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须先输入密码，之
@@ -361,7 +415,11 @@ sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须�
 
 ### uname
 **功能说明**：显示系统信息。
-**语 法**：uname [-amnrsv][--help][--version]
+**语 法**：
+```
+uname [-amnrsv][--help][--version]
+```
+
 **补充说明**：uname 可显示电脑以及操作系统的相关信息。
 **参 数**：
 
@@ -375,9 +433,13 @@ sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须�
 * --version 显示版本信息。
 ###　useradd
 **功能说明**：建立用户帐号。
-**语 法**：useradd [-mMnr][-c <备注>][-d <登入目录>][-e <有效期限>][-f <缓冲
+**语 法**：
+```
+useradd [-mMnr][-c <备注>][-d <登入目录>][-e <有效期限>][-f <缓冲
 天 数 >][-g < 群 组 >][-G < 群 组 >][-s <shell>][-u <uid>][ 用户帐
 号] 或 useradd -D [-b][-e < 有效期限>][-f < 缓冲天数>][-g < 群组>][-G < 群组>][-s <shell>]
+```
+
 **补充说明**：useradd 可用来建立用户帐号。帐号建好之后，再用 passwd 设定帐号
 的密码．而可用 userdel 删除帐号。使用 useradd 指令所建立的帐号，实际上是保
 存在/etc/passwd 文本文件中。
@@ -399,7 +461,11 @@ sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须�
 
 ### who
 **功能说明**：显示目前登入系统的用户信息。
-**语 法**：who [-Himqsw][--help][--version][am i][记录文件]
+**语 法**：
+```
+who [-Himqsw][--help][--version][am i][记录文件]
+```
+
 **补充说明**：执行这项指令可得知目前有那些用户登入系统，单独执行 who 指令
 会列出登入帐号，使用的 终端机，登入时间以及从何处登入或正在使用哪个 X
 显示器。
@@ -419,7 +485,11 @@ sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须�
 
 ### crontab
 **功能说明**：设置计时器。
-**语 法**：crontab [-u <用户名称>][配置文件] 或 crontab [-u <用户名称>][-elr]
+**语 法**：
+```
+crontab [-u <用户名称>][配置文件] 或 crontab [-u <用户名称>][-elr]
+```
+
 **补充说明**：cron 是一个常驻服务，它提供计时器的功能，让用户在特定的时间得
 以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使用计时
 器的功能。其配置文件格式如下：
@@ -433,7 +503,11 @@ sudo，则会发出警告的邮件给管理员。用户使用 sudo 时，必须�
 
 ### dircolors
 **功能说明**：设置 ls 指令在显示目录或文件时所用的色彩。
-**语 法**：dircolors [色彩配置文件] 或 dircolors [-bcp][--help][--version]
+**语 法**：
+```
+dircolors [色彩配置文件] 或 dircolors [-bcp][--help][--version]
+```
+
 **补充说明**：dircolors 可根据[色彩配置文件]来设置 LS_COLORS 环境变量或是显
 示设置 LS_COLORS 环境变量的 shell 指令。
 **参 数**：
@@ -458,7 +532,11 @@ Linux 的适用度。
 
 ### comm(common)
 **功能说明**：比较两个已排过序的文件。
-**语 法**：comm [-123][--help][--version][第 1 个文件][第 2 个文件]
+**语 法**：
+```
+comm [-123][--help][--version][第 1 个文件][第 2 个文件]
+```
+
 **补充说明**：这项指令会一列列地比较两个已排序文件的差异，并将其结果显示出
 来，如果没有指定任何参数，则会把结果分成 3 行显示：第 1 行仅是在第 1 个文
 件中出现过的列，第 2 行是仅在第 2 个文件中出现过的列，第 3 行则是在第 1
@@ -479,14 +557,22 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### fgrep(fixed regexp)
 **功能说明**：查找文件里符合条件的字符串。
-**语 法**：fgrep [范本样式][文件或目录...]
+**语 法**：
+```
+fgrep [范本样式][文件或目录...]
+```
+
 **补充说明**：本指令相当于执行 grep 指令加上参数"-F"，详见 grep 指令说明。
 
 ### grep
 **功能说明**：查找文件里符合条件的字符串。
-**语 法**：grep [-abcEFGhHilLnqrsvVwxy][-A<显示列数>][-B<显示列数>][-C<
+**语 法**：
+```
+grep [-abcEFGhHilLnqrsvVwxy][-A<显示列数>][-B<显示列数>][-C<
 显示列数>][-d<进行动作>][-e<范本样式>][-f<范本文件>][--help][范本样式][文件
 或目录...] 
+```
+
 **补充说明**：grep 指令用于查找内容包含指定的范本样式的文件，如果发现某文件
 的内容符合所指定的范本样式，预设 grep 指令会把含有范本样式的那一列显示
 出来。若不指定任何文件名称，或是所给予的文件名为“-”，则 grep 指令会从标
@@ -534,7 +620,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
  
 ### look
 **功能说明**：查询单字。
-**语 法**：look [-adf][-t<字尾字符串>][字首字符串][字典文件]
+**语 法**：
+```
+look [-adf][-t<字尾字符串>][字首字符串][字典文件]
+```
+
 **补充说明**：look 指令用于英文单字的查询。您仅需给予它欲查询的字首字符串，
 它会显示所有开头字符串符合该条件的单字。
 **参 数**：
@@ -546,7 +636,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
  
 ### wc(word count)
 **功能说明**：计算字数。
-**语 法**：wc [-clw][--help][--version][文件...]
+**语 法**：
+```
+wc [-clw][--help][--version][文件...]
+```
+
 **补充说明**：利用 wc 指令我们可以计算文件的 Byte 数、字数、或是列数，若不指
 定文件名称、或是所给予的文件名为“-”，则 wc 指令会从标准输入设备读取数据。
 **参 数**：
@@ -561,8 +655,12 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### gunzip(gnu unzip)
 **功能说明**：解压文件。
-**语 法**： gunzip [-acfhlLnNqrtvV][-s < 压缩字尾字符串 >][ 文
+**语 法**： 
+```
+gunzip [-acfhlLnNqrtvV][-s < 压缩字尾字符串 >][ 文
 件...] 或 gunzip [-acfhlLnNqrtvV][-s <压缩字尾字符串>][目录]
+```
+
 **补充说明**：gunzip 是个使用广泛的解压缩程序，它用于解开被 gzip 压缩过的文件，这些
 压缩文件预设最后的扩展名为".gz"。事实上 gunzip 就是 gzip 的硬连接，因此不论是压缩
 或解压缩，都可通过 gzip 指令单独完成。
@@ -588,7 +686,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### gzexe(gzip executable)
 **功能说明**：压缩执行文件。
-**语 法**：gzexe [-d][执行文件...]
+**语 法**：
+```
+gzexe [-d][执行文件...]
+```
+
 **补充说明**：gzexe 是用来压缩执行文件的程序。当您去执行被压缩过的执行文件时，该文件会自动解压然后继续执行，和使用一般的执行文件相同。
 **参 数**：
 
@@ -596,7 +698,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### gzip(gnu zip)
 **功能说明**：压缩文件。
-**语 法**： gzip [-acdfhlLnNqrtvV][-S < 压缩字尾字符串 >][-< 压缩效率>][--best/fast][文件...] 或 gzip [-acdfhlLnNqrtvV][-S <压缩字尾字符串>][-<压缩效率>][--best/fast][目录]
+**语 法**： 
+```
+gzip [-acdfhlLnNqrtvV][-S < 压缩字尾字符串 >][-< 压缩效率>][--best/fast][文件...] 或 gzip [-acdfhlLnNqrtvV][-S <压缩字尾字符串>][-<压缩效率>][--best/fast][目录]
+```
+
 **补充说明**：gzip 是个使用广泛的压缩程序，文件经它压缩过后，其名称后面会多出".gz"的扩展名。
 **参 数**：
 
@@ -623,8 +729,12 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### tar(tape archive)
 **功能说明**：备份文件。
-**语 法**：tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目
+**语 法**：
+```
+tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目
 录>][-f <备份文件>][-F <Script 文件>][-K <文件>][-L <媒体容量>][-N <日期时间>][-T < 范本文件 >][-V < 卷册名称 >][-X < 范本文件 >][-< 设备编号 >< 存储密度>][--after-date=< 日期时间 >][--atime-preserve][--backuup=< 备份方式>][--checkpoint][--concatenate][--confirmation][--delete][--exclude=< 范本样式>][--force-local][--group=< 群组名称>][--help][--ignore-failed-read][--new-volume-script=<Script 文 件>][--newer-mtime][--no-recursion][--null][--numeric-owner][--owner=< 用户名称>][--posix][--erve][--preserve-order][--preserve-permissions][--record-size=<区块数目>][--recursive-unlink][--remove-files][--rsh-command=< 执行指令>][--same-owner][--suffix=<备份字尾字符串>][--totals][--use-compress-program=<执行指令>][--version][--volno-file=<编号文件>][文件或目录...]
+```
+
 **补充说明**：tar 是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。
  **参数**：
  
@@ -705,7 +815,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
  
 ### unarj
 **功能说明**：解压缩.arj 文件。
-**语 法**：unarj [eltx][.arj 压缩文件]
+**语 法**：
+```
+unarj [eltx][.arj 压缩文件]
+```
+
 **补充说明**：unarj 为.arj 压缩文件的压缩程序。
 **参 数**：
 
@@ -716,7 +830,11 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
  
 ### unzip
 **功能说明**：解压缩 zip 文件
-**语 法**：unzip [-cflptuvz][-agCjLMnoqsVX][-P <密码>][.zip 文件][文件][-d <目录>][-x <文件>] 或 unzip [-Z]
+**语 法**：
+```
+unzip [-cflptuvz][-agCjLMnoqsVX][-P <密码>][.zip 文件][文件][-d <目录>][-x <文件>] 或 unzip [-Z]
+```
+
 **补充说明**：unzip 为.zip 压缩文件的解压缩程序。
 **参 数**：
 
@@ -749,8 +867,12 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
  
 ### zip
 **功能说明**：压缩文件。
-**语 法**：zip [-AcdDfFghjJKlLmoqrSTuvVwXyz$][-b <工作目录>][-ll][-n <字尾字
+**语 法**：
+```
+zip [-AcdDfFghjJKlLmoqrSTuvVwXyz$][-b <工作目录>][-ll][-n <字尾字
 符串>][-t <日期时间>][-<压缩效率>][压缩文件][文件...][-i <范本样式>][-x <范本样式>]
+```
+
 **补充说明**：zip 是个使用广泛的压缩程序，文件经它压缩后会另外产生具有".zip"扩展名的压缩文件。
 **参 数**：
 
@@ -793,8 +915,12 @@ extended regular expression 语法来解读，而 grep 则用 basic regular expr
 
 ### diff(differential)
 **功能说明**：比较文件的差异。
-**语 法**：diff [-abBcdefHilnNpPqrstTuvwy][-<行数>][-C <行数>][-D <巨集名称
+**语 法**：
+```
+diff [-abBcdefHilnNpPqrstTuvwy][-<行数>][-C <行数>][-D <巨集名称
 >][-I < 字符或字符串 >][-S < 文 件 >][-W < 宽 度 >][-x < 文件或目录 >][-X < 文 件>][--help][--left-column][--suppress-common-line][文件或目录 1][文件或目录 2]
+```
+
 **补充说明**：diff 以逐行的方式，比较文本文件的异同处。所是指定要比较目录，则 diff 会比较目录中相同文件名的文件，但不会比较其中子目录。
 **参 数**：
 
@@ -839,9 +965,13 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
  
 ### find
 **功能说明**：查找文件或目录。
-**语 法**：find [目录...][-amin <分钟>][-anewer <参考文件或目录>][-atime <24 小时数 >][-cmin < 分 钟 >][-cnewer < 参考文件或目录 >][-ctime <24 小时数>][-daystart][-depyh][-empty][-exec < 执行指令 >][-false][-fls < 列表文件>][-follow][-fprint <列表文件>][-fprint0 <列表文件>][-fprintf<列表文件><输出格式>][-fstype <文件系统类型>][-gid <群组识别码>][-group <群组名称>][-help][-ilname <
+**语 法**：
+```
+find [目录...][-amin <分钟>][-anewer <参考文件或目录>][-atime <24 小时数 >][-cmin < 分 钟 >][-cnewer < 参考文件或目录 >][-ctime <24 小时数>][-daystart][-depyh][-empty][-exec < 执行指令 >][-false][-fls < 列表文件>][-follow][-fprint <列表文件>][-fprint0 <列表文件>][-fprintf<列表文件><输出格式>][-fstype <文件系统类型>][-gid <群组识别码>][-group <群组名称>][-help][-ilname <
 范本样式>][-iname <范本样式>][-inum <inode 编号>][-ipath <范本样式>][-iregex <范本样式 >][-links < 连接数目 >][-lname < 范本样式 >][-ls][-maxdepth < 目录层级>][-mindepth <目录层级>][-mmin <分钟>][-mount]
 [-mtime <24 小时数 >][-name < 范本样式 >][-newer < 参考文件或目录>][-nogroup][noleaf] [-nouser][-ok <执行指令>][-path <范本样式>][-perm <权限数值>][-print][-print0][-printf <输出格式>][-prune][-regex <范本样式>][-size <文件大小>][-true][-type <文件类型>][-uid <用户识别码>][-used <日数>][-user <拥有者名称>][-version][-xdev][-xtype <文件类型>]
+```
+
 **补充说明**：find 指令用于查找符合条件的文件。任何位于参数之前的字符串都将被视为欲查找的目录。
 **参 数**：
 
@@ -915,7 +1045,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### git(gnu interactive tools)
 **功能说明**：文字模式下的文件管理员。
-**语 法**：git
+**语 法**：
+```
+git
+```
+
 **补充说明**：git 是用来管理文件的程序，它十分类似 DOS 下的 Norton Commander，具
 有互动式操作界面。它的操作方法和 Norton Commander 几乎一样，略诉如下：
 
@@ -932,7 +1066,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### lsattr(list attribute)
 **功能说明**：显示文件属性。
-**语 法**：lsattr [-adlRvV][文件或目录...]
+**语 法**：
+```
+lsattr [-adlRvV][文件或目录...]
+```
+
 **补充说明**：用 chattr 执行改变文件或目录的属性，可执行lsattr指令查询其属性。
 **参 数**：
 
@@ -945,8 +1083,12 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### rcp(remote copy)
 **功能说明**：远端复制文件或目录。
-**语 法**：rcp [-pr][源文件或目录][目标文件或目录] 或 rcp [-pr][源文件或目
+**语 法**：
+```
+rcp [-pr][源文件或目录][目标文件或目录] 或 rcp [-pr][源文件或目
 录...][目标文件]
+```
+
 **补充说明**：rcp 指令用在远端复制文件或目录，如同时指定两个以上的文件或目
 录，且最后的目的地是一个已经存在的目录，则它灰把前面指定的所有文件或目
 录复制到该目录中。
@@ -957,7 +1099,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### rm(remove)
 **功能说明**：删除文件或目录。
-**语 法**：rm [-dfirv][--help][--version][文件或目录...]
+**语 法**：
+```
+rm [-dfirv][--help][--version][文件或目录...]
+```
+
 **补充说明**：执行 rm 指令可删除文件或目录，如欲删除目录必须加上参数"-r"，
 否则预设仅会删除文件。
 **参 数**：
@@ -972,7 +1118,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### touch
 **功能说明**：改变文件或目录时间。
-**语 法**：touch [-acfm][-d <日期时间>][-r <参考文件或目录>][-t <日期时间>][--help] [--version][文件或目录...] 或touch[-acfm][--help][--version][日期时间][文件或目录...]
+**语 法**：
+```
+touch [-acfm][-d <日期时间>][-r <参考文件或目录>][-t <日期时间>][--help] [--version][文件或目录...] 或touch[-acfm][--help][--version][日期时间][文件或目录...]
+```
+
 **补充说明**：使用 touch 指令可更改文件或目录的日期时间，包括存取时间和更改
 时间。
 **参 数**：
@@ -1004,7 +1154,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### chgrp(change group)
 **功能说明**：变更文件或目录的所属群组。
-**语 法**： chgrp [-cfhRv][--help][--version][ 所属群组 ][ 文件或目录...] 或 chgrp [-cfhRv][--help][--reference=<参考文件或目录>][--version][文件或目录...]
+**语 法**：
+```
+chgrp [-cfhRv][--help][--version][ 所属群组 ][ 文件或目录...] 或 chgrp [-cfhRv][--help][--reference=<参考文件或目录>][--version][文件或目录...]
+```
+ 
 **补充说明**：在 UNIX 系统家族里，文件或目录权限的掌控以拥有者及所属群组来
 管理。您可以使用 chgrp 指令去变更文件与目录的所属群组，设置方式采用群组
 名称或群组识别码皆可。
@@ -1023,9 +1177,13 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### chmod(change mode)
 **功能说明**：变更文件或目录的权限。
-**语 法**：chmod [-cfRv][--help][--version][<权限范围>+/-/=<权限设置...>][文件
+**语 法**：
+```
+chmod [-cfRv][--help][--version][<权限范围>+/-/=<权限设置...>][文件
 或目录 ...] 或 chmod [-cfRv][--help][--version][ 数字代号 ][ 文件或目
 录...] 或 chmod [-cfRv][--help][--reference=<参考文件或目录>][--version][文件或目录...]
+```
+
 **补充说明**：在 UNIX 系统家族里，文件或目录权限的控制分别以读取，写入，执
 行 3 种一般权限来区分，另有 3 种特殊权限可供运用，再搭配拥有者与所属群组
 管理权限范围。您可以使用 chmod 指令去变更文件与目录的权限，设置方式采
@@ -1053,8 +1211,12 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### chown(change owner)
 **功能说明**：变更文件或目录的拥有者或所属群组。
-**语 法**：chown [-cfhRv][--dereference][--help][--version][拥有者.<所属群组>][文件或目录..] 或 chown [-chfRv][--dereference][--help][--version][.所属群组][文件或
+**语 法**：
+```
+chown [-cfhRv][--dereference][--help][--version][拥有者.<所属群组>][文件或目录..] 或 chown [-chfRv][--dereference][--help][--version][.所属群组][文件或
 目录... ...] 或 chown[-cfhRv][--dereference][--help][--reference=<参考文件或目录>][--version][文件或目录...]
+```
+
 **补充说明**：在 UNIX 系统家族里，文件或目录权限的掌控以拥有者及所属群组来
 管理。您可以使用 chown 指令去变更文件与目录的拥有者或所属群组，设置方
 式采用用户名称或用户识别码皆可，设置群组则用群组名称或群组识别码。
@@ -1073,7 +1235,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### cp(copy)
 **功能说明**：复制文件或目录。
-**语 法**： cp [-abdfilpPrRsuvx][-S < 备份字尾字符串 >][-V < 备份方式>][--help][--spares=<使用时机>][--version][源文件或目录][目标文件或目录] [目的目录]
+**语 法**： 
+```
+cp [-abdfilpPrRsuvx][-S < 备份字尾字符串 >][-V < 备份方式>][--help][--spares=<使用时机>][--version][源文件或目录][目标文件或目录] [目的目录]
+```
+
 **补充说明**：cp 指令用在复制文件或目录，如同时指定两个以上的文件或目录，
 且最后的目的地是一个已经存在的目录，则它会把前面指定的所有文件或目录复
 制到该目录中。若同时指定多个文件或目录，而最后的目的地并非是一个已存在
@@ -1124,21 +1290,33 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
  
 ### ncftp(nc file transfer protocol)
 **功能说明**：传输文件。
-**语 法**：ncftp [主机或 IP 地址]
+**语 法**：
+```
+ncftp [主机或 IP 地址]
+```
+
 **补充说明**：FTP 让用户得以下载存放于服务器主机的文件，也能将文件上传到远
 端主机放置。NcFTP 是文字模式 FTP 程序的佼佼者，它具备多样特色， 包括显
 示传输速率，下载进度，自动续传，标住书签，可通过防火墙和代理服务器等。
 
 ### tftp(trivial file transfer protocol)
 **功能说明**：传输文件。
-**语 法**：tftp [主机名称或 IP 地址]
+**语 法**：
+```
+tftp [主机名称或 IP 地址]
+```
+
 **补充说明**：FTP 让用户得以下载存放于远端主机的文件，也能将文件上传到远端
 主机放置。tftp 是简单的文字模式 ftp 程序，它所使用的指令和 FTP 类似。
 
 ### uucp
 **功能说明**：在 Unix 系统之间传送文件。
-**语 法**：uucp [-cCdfjmrRtvW][-g<等级>][-I<配置文件>][-n<用户>][-x<类型
+**语 法**：
+```
+uucp [-cCdfjmrRtvW][-g<等级>][-I<配置文件>][-n<用户>][-x<类型
 >][--help][...来源][目的]
+```
+
 **补充说明**：UUCP 为 Unix 系统之间，通过序列线来连线的协议。uucp 使用 UUCP
 协议，主要的功能为传送文件。
 **参 数**：
@@ -1169,14 +1347,22 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### cd(change directory)
 **功能说明**：切换目录。
-**语 法**：cd [目的目录]
+**语 法**：
+```
+cd [目的目录]
+```
+
 **补充说明**：cd 指令可让用户在不同的目录间切换，但该用户必须拥有足够的权
 限进入目的目录。
 
 ### df(disk free)
 **功能说明**：显示磁盘的相关信息。
-**语 法**：df [-ahHiklmPT][--block-size=<区块大小>][-t <文件系统类型>][-x <文
+**语 法**：
+```
+df [-ahHiklmPT][--block-size=<区块大小>][-t <文件系统类型>][-x <文
 件系统类型>][--help][--no-sync][--sync][--version][文件或设备]
+```
+
 补充说明：df 可显示磁盘的文件系统与使用情形。
 **参 数**：
 
@@ -1203,7 +1389,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### du(disk usage)
 **功能说明**：显示目录或文件的大小。
-**语 法**： du [-abcDhHklmsSx][-L < 符号连接 >][-X <文件>][--block-size][--exclude=< 目录或文件 >][--max-depth=< 目录层数>][--help][--version][目录或文件]
+**语 法**： 
+```
+du [-abcDhHklmsSx][-L < 符号连接 >][-X <文件>][--block-size][--exclude=< 目录或文件 >][--max-depth=< 目录层数>][--help][--version][目录或文件]
+```
+
 **补充说明**：du 会显示指定的目录或文件所占用的磁盘空间。
 **参 数**：
 
@@ -1231,11 +1421,15 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### ls(list)
 **功能说明**：列出目录内容。
-**语 法**： ls [-1aAbBcCdDfFgGhHiklLmnNopqQrRsStuUvxX][-I < 范本样式
+**语 法**： 
+```
+ls [-1aAbBcCdDfFgGhHiklLmnNopqQrRsStuUvxX][-I < 范本样式
 >][-T <跳格字数>][-w <每列字符数>][--block-size=<区块大小>][--color=<使用时
 机 >][--format=< 列表格式 >][--full-time][--help][--indicator-style=< 标注样式
 >][--quoting-style=< 引号样式 >][--show-control-chars][--sort=< 排序方式
 >][--time=<时间戳记>][--version][文件或目录...]
+```
+
 **补充说明**：执行 ls 指令可列出目录的内容，包括文件和子目录的名称。
 **参 数**：
 
@@ -1296,7 +1490,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### mkdir(make directories)
 **功能说明**：建立目录
-**语 法**：mkdir [-p][--help][--version][-m <目录属性>][目录名称]
+**语 法**：
+```
+mkdir [-p][--help][--version][-m <目录属性>][目录名称]
+```
+
 **补充说明**：mkdir 可建立目录并同时设置目录的权限。
 **参 数**：
 
@@ -1309,7 +1507,11 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### quota
 **功能说明**：显示磁盘已使用的空间与限制。
-**语 法**：quota [-quvV][用户名称...] 或 quota [-gqvV][群组名称...]
+**语 法**：
+```
+quota [-quvV][用户名称...] 或 quota [-gqvV][群组名称...]
+```
+
 **补充说明**：执行 quota 指令，可查询磁盘空间的限制，并得知已使用多少空间。
 **参 数**：
 
@@ -1321,8 +1523,12 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### rmdir(remove directory)
 **功能说明**：删除目录。
-**语 法**：rmdir [-p][--help][--ignore-fail-on-non-empty][--verbose][--version][目
+**语 法**：
+```
+rmdir [-p][--help][--ignore-fail-on-non-empty][--verbose][--version][目
 录...]
+```
+
 **补充说明**：当有空目录要删除时，可使用 rmdir 指令。
 **参 数**：
 
@@ -1337,8 +1543,12 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### ifconfig
 **功能说明**：显示或设置网络设备。
-**语 法**：ifconfig [网络设备][down up -allmulti -arp -promisc][add<地址>][del<
+**语 法**：
+```
+ifconfig [网络设备][down up -allmulti -arp -promisc][add<地址>][del<
 地址>][<hw<网络设备类型><硬件地址>][io_addr<I/O 地址>][irq<IRQ 地址>][media<网络媒介类型>][mem_start<内存地址>][metric<数目>][mtu<字节>][netmask<子网掩码>][tunnel<地址>][-broadcast<地址>][-pointopoint<地址>][IP地址]
+```
+
 **补充说明**：ifconfig 可设置网络设备的状态，或是显示目前的设置。
 **参 数**：
 
@@ -1364,9 +1574,13 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### nc
 **功能说明**：设置路由器。
-**语 法**：nc [-hlnruz][-g<网关...>][-G<指向器数目>][-i<延迟秒数>][-o<输出文
+**语 法**：
+```
+nc [-hlnruz][-g<网关...>][-G<指向器数目>][-i<延迟秒数>][-o<输出文
 件>][-p<通信端口>][-s<来源位址>][-v...][-w<超时秒数>][主机名称][通信端口...]
 补充说明：执行本指令可设置路由器的相关参数。
+```
+
 **参 数**：
 
 *  -g<网关> 设置路由器跃程通信网关，最丢哦可设置 8 个。
@@ -1387,18 +1601,30 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
  
 ### netconf
 **功能说明**：设置各项网络功能。
-**语 法**：netconf
+**语 法**：
+```
+netconf
+```
+netconf
 **补充说明**：netconf 是 Red Hat Linux 发行版专门用来调整 Linux 各项设置的程序。
 
 ### netconfig
 **功能说明**：设置网络环境。
-**语 法**：netconfig
+**语 法**：
+```
+netconfig
+```
+
 **补充说明**：这是 Slackware 发行版内附程序，它具有互动式的问答界面，让用户
 轻易完成网络环境的设置。
 
 ### netstat
 **功能说明**：显示网络状态。
-**语 法**：netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
+**语 法**：
+```
+netstat [-acCeFghilMnNoprstuvVwx][-A<网络类型>][--ip]
+```
+
 **补充说明**：利用 netstat 指令可让你得知整个 Linux 系统的网络情况。
 **参 数**：
 
@@ -1429,8 +1655,12 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
  
 ### ping
 **功能说明**：检测主机。
-**语 法**：ping [-dfnqrRv][-c<完成次数>][-i<间隔秒数>][-I<网络界面>][-l<前置
+**语 法**：
+```
+ping [-dfnqrRv][-c<完成次数>][-i<间隔秒数>][-I<网络界面>][-l<前置
 载入>][-p<范本样式>][-s<数据包大小>][-t<存活数值>][主机名称或IP地址]
+```
+
 **补充说明**：执行ping指令会使用ICMP传输协议，发出要求回应的信息，若远端
 主机的网络功能没有问题，就会回应该信息，因而得知该主机运作正常。
 **参 数**：
@@ -1452,10 +1682,15 @@ Only in 目录：文件 A 若使用-N 参数，则 diff 会将文件 A 与一个
 
 ### statserial(status ofserial port)
 **功能说明**：显示串口状态。
-**语 法**：statserial [-dnx][串口设备名称]
+**语 法**：
+```
+statserial [-dnx][串口设备名称]
+```
+
 **补充说明**：statserial 可显示各个接脚的状态，常用来判断串口是否正常。
 **参 数**：
 
 *  -d 以 10 进制数字来表示串口的状态。
 *  -n 仅显示一次串口的状态后即结束程序。
 *  -x 与-n 参数类似，但是以 16 进制来表示。
+
