@@ -33,8 +33,7 @@ tags:
 **要关闭服务的话，输入**
 >net stop RabbitMQ
 
-**6、打开web界面，地址 http://localhost:15672/  默认的用户名：guest 默认的密码为：guest，登录后你就可以看到下图了**
-![这里写图片描述](http://pd6p053wl.bkt.clouddn.com/r%E7%9A%84%E9%A1%B5%E9%9D%A2.jpg)
+**6、打开web界面，地址 http://localhost:15672/  默认的用户名：guest 默认的密码为：guest**
 
 **你可以点击Admin去创建一个新的用户，我下面配置文件就会用到新的用户的用户名跟密码**
 
