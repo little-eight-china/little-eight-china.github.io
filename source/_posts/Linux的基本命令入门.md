@@ -2,7 +2,7 @@
 title: Linux的基本命令入门
 date: 2018-09-27 20:30:42
 categories: 
-  - 杂类
+  - Linux
 tags: 
   - little_eight
 ---
