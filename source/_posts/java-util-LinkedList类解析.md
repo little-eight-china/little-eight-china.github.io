@@ -129,8 +129,9 @@ tags:
     }
 
 ```
+## 方法
 
-## add
+### add
 ```
  /**
   *把元素加到指定下标，也就是在指定下标插入（新建）链表
@@ -178,7 +179,7 @@ public void add(int index, E element) {
         modCount++;
     }
 ```
-## addAll
+### addAll
 ```
  /**
   * 在下标index后，添加集合c
@@ -224,7 +225,7 @@ public void add(int index, E element) {
 
 ```
 
-## addFirst
+### addFirst
 ```
  /**
   * 实现的办法是这个私有的，就是在表头加链表
@@ -242,7 +243,7 @@ public void add(int index, E element) {
     }
 ```
 
-## addLast
+### addLast
 ```
  /**
   * 实现的办法是这个私有的，就是在表尾加链表
@@ -260,7 +261,7 @@ public void add(int index, E element) {
     }
 ```
 
-## clear
+### clear
 ```
  /**
   * 清除所有链表
@@ -279,7 +280,7 @@ public void add(int index, E element) {
     }
 ```
 
-## clone
+### clone
 ```
  /**
   * 浅拷贝
@@ -298,7 +299,7 @@ public void add(int index, E element) {
     }
 ```
 
-## contains、indexOf、lastIndexOf
+### contains、indexOf、lastIndexOf
 ```
  /**
   * 是否包含此元素
@@ -349,7 +350,7 @@ public void add(int index, E element) {
     }
 ```
 
-## get、getFirst、getLast
+### get、getFirst、getLast
 这三个get方法都必须保证元素非null的。
 
 ```
@@ -380,7 +381,7 @@ public void add(int index, E element) {
     }
 ```
 
-## listIterator
+### listIterator
 ```
  /**
   * 就是根据下标new一个内部迭代类
@@ -390,7 +391,7 @@ public void add(int index, E element) {
         return new ListItr(index);
     }
 ```
-## offer、offerFirst、offerLast
+### offer、offerFirst、offerLast
 这个跟add一样的，只不过返回一个true的结果
 ```
    public boolean offer(E e) {
@@ -411,7 +412,7 @@ public void add(int index, E element) {
 
 
 
-## peek、peekFirst、peekLast
+### peek、peekFirst、peekLast
 这三个方法都不用保证元素非null的。
 ```
    /**
@@ -441,7 +442,7 @@ public void add(int index, E element) {
     
 ```
 
-## poll、pollFirst、pollLast
+### poll、pollFirst、pollLast
 ```
      /**
       * 1.5版本的删除链表头
@@ -485,7 +486,7 @@ public void add(int index, E element) {
     }
 ```
 
-## remove、removeFirst、removeLast
+### remove、removeFirst、removeLast
 顾名思义，就是删除链表，实现方法都是unlink（必须保证非null）
 ```
  /**
@@ -518,7 +519,7 @@ E unlink(Node<E> x) {
     }
 ```
 
-## set
+### set
 ```
  /**
   * 根据下标设置对应链表的元素
@@ -532,7 +533,7 @@ E unlink(Node<E> x) {
     }
 ```
 
-## toArray
+### toArray
 ```
  /**
   * 转换成数组

@@ -221,8 +221,9 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
 0&0=0;   0&1=0;    1&0=0;     1&1=1
 即：两位同时为1，结果才为1，否则为0。
 
+## 方法
 
-## capacity
+### capacity
 ```
     /**
      *  返回当前容量
@@ -234,7 +235,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## clear
+### clear
 ```
     /**
      * 把所有链表都设置为null，清空hashMap
@@ -250,7 +251,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## clone
+### clone
 ```
     /**
      * 浅拷贝
@@ -270,7 +271,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## containsKey
+### containsKey
 ```
     /**
      * 判断是否包含此key
@@ -281,7 +282,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## entrySet
+### entrySet
 ```
     /**
      * 返回this.entrySet，没有就new一个
@@ -337,7 +338,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## get、getNode、getOrDefault
+### get、getNode、getOrDefault
 ```
     /**
      * 根据key返回value
@@ -387,7 +388,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
 具体可以去看下这篇博客分析https://blog.csdn.net/ysvae/article/details/81090894
 
 
-## hash
+### hash
 ```
     /**
      * 获取hash值，
@@ -400,7 +401,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## isEmpty
+### isEmpty
 ```
     /**
      * 根据size判断集合是否为空
@@ -410,7 +411,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## keySet
+### keySet
 ```
     /**
      * 返回所有key的Set集合
@@ -455,7 +456,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
      
 ```
 
-## put、putIfAbsent、putVal
+### put、putIfAbsent、putVal
 ```
     /**
      * 设值
@@ -537,7 +538,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## remove、removeNode
+### remove、removeNode
 ```
     /**
      * 移除某个对应的值（链表），返回对应的value，没的话就返回null
@@ -609,7 +610,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## replace、replaceAll
+### replace、replaceAll
 ```
     /**
      * 根据key替换对应value，返回旧值
@@ -660,7 +661,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## resize
+### resize
 ```
     /**
      * 扩容
@@ -762,7 +763,7 @@ HashMap是一个利用哈希表原理来存储元素的无序不安全键值都�
     }
 ```
 
-## values
+### values
 ```
     /**
      * 返回所有value值的Collection集合，（莫名奇妙就有了这个值。。。）
@@ -823,8 +824,6 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {}
 ```
 
 这里解析的方法从HashMap的get、put等入手
-
-
 
 
 ### getTreeNode

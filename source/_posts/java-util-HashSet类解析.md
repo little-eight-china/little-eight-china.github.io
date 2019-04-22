@@ -78,8 +78,9 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
      
 ```
+## 方法
 
-## add
+### add
 ```
     /**
      * 往map里put值
@@ -89,7 +90,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## 
+### clear
 ```
     /**
      * 清除map
@@ -99,7 +100,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## clone
+### clone
 ```
     /**
      * 克隆
@@ -116,7 +117,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## contains
+### contains
 ```
     /**
      * 是否包含此值，也就是判断是否包含此key
@@ -126,7 +127,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## isEmpty
+### isEmpty
 ```
     /**
      * 是否为空
@@ -136,7 +137,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## iterator
+### iterator
 ```
     /**
      * 迭代类
@@ -146,7 +147,7 @@ HashSet 是一个由 HashMap 实现的集合，元素无序且不能重复。
     }
 ```
 
-## remove
+### remove
 ```
     /**
      * 移除某值
