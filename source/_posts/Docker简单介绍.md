@@ -177,6 +177,44 @@ Successfully built 44aa4490ce2c
 更多Dockerfile命令可参考官方文档：https://docs.docker.com/engine/reference/builder/
 
 
+
+## docker使用
+
+### docker安装
+
+* 使用 sudo 或 root 权限登录 Centos，确保 yum 包更新到最新。
+```
+$ sudo yum update
+```
+
+* 执行 Docker 安装脚本。
+```
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+```
+* 启动 Docker 进程。
+```
+sudo systemctl start docker
+```
+
+
+后期可能会出现这样的错误信息：
+>Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/images/json: dial unix /var/run/docker.sock: connect: permission denied
+
+原因：
+>docker守护进程启动的时候，会默认赋予名字为docker的用户组读写Unix socket的权限，因此只要创建docker用户组，并将当前用户加入到docker用户组中，那么当前用户就有权限访问Unix socket了，进而也就可以执行docker相关命令。
+
+解决方案
+> .#添加docker用户组
+sudo groupadd docker    
+ #添加将登陆用户加入到docker用户组中
+sudo gpasswd -a $USER docker    
+ #将登陆用户加入到docker更新用户组中
+newgrp docker     #更新用户组
+docker ps   
+ #测试docker命令是否可以使用sudo正常使用
+
+
 ## Kubernetes（太多，后期再补充吧）
 
 Kubernetes，因为首尾字母中间有8个字符，所以被简写成 K8s。
