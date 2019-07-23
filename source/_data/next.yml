@@ -38,3 +38,26 @@ vendors:
   lazyload: https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js
   fontawesome: https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css
   quicklink: https://cdn.jsdelivr.net/npm/quicklink@1.0.0/dist/quicklink.umd.js
+
+# 推百度
+baidu_push: true
+
+# 可通过 https://leancloud.cn 得到 AppID 和 AppKey.
+#leancloud_visitors:
+#  enable: true
+#  app_id: xDCefA9EsTVuN1A9rHMfI8CG-gzGzoHsz
+#  app_key: TgK8LqquaVhiY6lmrw6U8zcW
+#  security: false
+#  betterPerformance: false
+
+# 阅读数
+busuanzi_count:
+  enable: false
+  total_visitors: false
+  total_visitors_icon: user
+  total_views: false
+  total_views_icon: eye
+  post_views: false
+  post_views_icon: eye
+  uv_offset: 1230
+  pv_offset: 8166

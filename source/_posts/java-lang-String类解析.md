@@ -20,7 +20,7 @@ tags:
     private int hash;
 ```
 ## 方法
-
+<!--more-->
 ### charAt
 ```
     /**
