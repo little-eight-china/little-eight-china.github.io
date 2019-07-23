@@ -43,21 +43,21 @@ vendors:
 baidu_push: true
 
 # 可通过 https://leancloud.cn 得到 AppID 和 AppKey.
-#leancloud_visitors:
-#  enable: true
-#  app_id: xDCefA9EsTVuN1A9rHMfI8CG-gzGzoHsz
-#  app_key: TgK8LqquaVhiY6lmrw6U8zcW
-#  security: false
-#  betterPerformance: false
+leancloud_visitors:
+  enable: true
+  app_id: SQiLPBGhsq8LePRY6TJxxRCd-gzGzoHsz
+  app_key: QvnCTiERGex86aowso63wc4S
+  security: false
+  betterPerformance: false
 
 # 阅读数
 busuanzi_count:
-  enable: true
-  total_visitors: true
+  enable: false
+  total_visitors: false
   total_visitors_icon: user
-  total_views: true
+  total_views: false
   total_views_icon: eye
-  post_views: true
+  post_views: false
   post_views_icon: eye
   uv_offset: 1230
   pv_offset: 8166
