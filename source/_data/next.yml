@@ -52,12 +52,12 @@ leancloud_visitors:
 
 # 阅读数
 busuanzi_count:
-  enable: false
-  total_visitors: false
+  enable: true
+  total_visitors: true
   total_visitors_icon: user
-  total_views: false
+  total_views: true
   total_views_icon: eye
-  post_views: false
+  post_views: true
   post_views_icon: eye
   uv_offset: 1230
   pv_offset: 8166
