@@ -1,375 +1,620 @@
-<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/main.css?v=7.0.1"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1"><link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222"><script id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"7.0.1",sidebar:{position:"left",display:"post",offset:12,onmobile:!1,dimmer:!1},back2top:!0,back2top_sidebar:!1,fancybox:!0,fastclick:!0,lazyload:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="线程基础什么是线程？几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行"><meta name="keywords" content="little_eight"><meta property="og:type" content="article"><meta property="og:title" content="Java多线程"><meta property="og:url" content="https://little8.top/2018/12/10/Java多线程/index.html"><meta property="og:site_name" content="八达博客"><meta property="og:description" content="线程基础什么是线程？几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行"><meta property="og:locale" content="zh-CN"><meta property="og:updated_time" content="2019-07-23T13:00:40.947Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Java多线程"><meta name="twitter:description" content="线程基础什么是线程？几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行"><link rel="alternate" href="/atom.xml" title="八达博客" type="application/atom+xml"><link rel="canonical" href="https://little8.top/2018/12/10/Java多线程/"><script id="page.configurations">CONFIG.page={sidebar:""}</script><title>Java多线程 | 八达博客</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">八达博客</span> <span class="logo-line-after"><i></i></span></a></div></div><div class="site-nav-toggle"><button aria-label="切换导航栏"><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">29</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类<span class="badge">6</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">2</span></a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i> </span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="搜索..." spellcheck="false" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="https://little8.top/2018/12/10/Java多线程/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="小八"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="八达博客"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Java多线程</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2018-12-10 13:49:27" itemprop="dateCreated datePublished" datetime="2018-12-10T13:49:27+08:00">2018-12-10</time> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i> </span><span class="post-meta-item-text">更新于</span> <time title="修改时间：2019-07-23 21:00:40" itemprop="dateModified" datetime="2019-07-23T21:00:40+08:00">2019-07-23</time> </span><span class="post-category"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-folder-o"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span> </span><span id="/2018/12/10/Java多线程/" class="leancloud_visitors" data-flag-title="Java多线程"><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="post-meta-item-text">阅读次数：</span> <span class="leancloud-visitors-count"></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> 阅读次数： <span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h2><h3 id="什么是线程？"><a href="#什么是线程？" class="headerlink" title="什么是线程？"></a>什么是线程？</h3><p>几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。</p><p>线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的<br>概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。</p><p>有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行路径，每个线程有它自己的堆栈、自己的程序计数器和自己的局部变量。但是，与分隔的进程相比，进程中的线程之间的隔离程度要小。它们共享内存、文件句柄和其它每个进程应有的状态。</p><p>进程可以支持多个线程，它们看似同时执行，但互相之间并不同步。一个进程中的多个线程共享相同的内存地址空间，这就意味着它们可以访问相同的变量和对象，而且它们从同一堆中分配对象。尽管这让线程之间共享信息变得更容易，但您必须小心，确保它们不会妨碍同一进程里的其它线程。</p><p>Java 线程工具和 API 看似简单。但是，编写有效使用线程的复杂程序并不十分容易。因为有多个线程共存在相同的内存空间中并共享相同的变量，所以您必须小心，确保您的线程不会互相干扰。</p><h3 id="每个-Java-程序都使用线程"><a href="#每个-Java-程序都使用线程" class="headerlink" title="每个 Java 程序都使用线程"></a>每个 Java 程序都使用线程</h3><p>每个 Java 程序都至少有一个线程 — 主线程。当一个 Java 程序启动时，JVM 会创建主线程，并在该线程中调用程序的 main() 方法。 JVM 还创建了其它线程，您通常都看不到它们 — 例如，与垃圾收集、对象终止和其它 JVM 内务处理任务相关的线程。其它工具也创建线程，如 AWT（抽象窗口工具箱（Abstract Windowing Toolkit））或 Swing UI 工具箱、servlet 容器、应用程序服务器和 RMI（远程方法调用（Remote Method Invocation））</p><h3 id="Java-线程的风险"><a href="#Java-线程的风险" class="headerlink" title="Java 线程的风险"></a>Java 线程的风险</h3><p>虽然 Java 线程工具非常易于使用，但当我们创建多线程程序时，应该尽量避免一些风险。<br>当多个线程访问同一数据项（如静态字段、可全局访问对象的实例字段或共享集合）时，需要确保它们协调了对数据的访问，这样它们都可以看到数据的一致视图，而且相互不会干扰另一方的更改。<br>为了实现这个目的，Java 语言提供了两个关键字：synchronized 和 volatile。当从多个线程中访问变量时，必须确保对该访问正确地进行了同步。对于简单变量，将变量声明成volatile 也许就足够了，但在大多数情况下，需要使用同步。<br>如果将要使用同步来保护对共享变量的访问，那么必须确保在程序中所有访问该变量的地方都使用同步。</p><p>虽然线程可以大大简化许多类型的应用程序，过度使用线程可能会危及程序的性能及其可维护性。<br>线程消耗了资源。因此，在不降低性能的情况下，可以创建的线程的数量是有限制的。 尤其在单处理器系统中，使用多个线程不会使主要消耗 CPU 资源的程序运行得更快。<br><a id="more"></a></p><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>以下示例使用两个线程，一个用于计时，一个用于执行实际工作。主线程使用非常简单的算法计算<br>素数。<br>在它启动之前，它创建并启动一个计时器线程，这个线程会休眠十秒钟，然后设置一个主线程要检查的标志。十秒钟之后，主线程将停止。请注意，共享标志被声明成 volatile。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalculatePrimes</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_PRIMES = <span class="number">1000000</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TEN_SECONDS = <span class="number">10000</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> finished = <span class="keyword">false</span>; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">int</span>[] primes = <span class="keyword">new</span> <span class="keyword">int</span>[MAX_PRIMES]; </span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; count&lt;MAX_PRIMES; i++) &#123; </span><br><span class="line">        <span class="comment">// Check to see if the timer has expired </span></span><br><span class="line">            <span class="keyword">if</span> (finished) &#123; </span><br><span class="line">            <span class="keyword">break</span>; &#125; </span><br><span class="line">        <span class="keyword">boolean</span> prime = <span class="keyword">true</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;count; j++) &#123; </span><br><span class="line">            <span class="keyword">if</span> (i % primes[j] == <span class="number">0</span>) &#123; </span><br><span class="line">                  prime = <span class="keyword">false</span>; </span><br><span class="line">               <span class="keyword">break</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">if</span> (prime) &#123; </span><br><span class="line">            primes[count++] = i; </span><br><span class="line">            System.out.println(<span class="string">"Found prime: "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    CalculatePrimes calculator = <span class="keyword">new</span> CalculatePrimes(); </span><br><span class="line">    calculator.start(); </span><br><span class="line">    <span class="keyword">try</span> &#123; </span><br><span class="line">    Thread.sleep(TEN_SECONDS); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">catch</span> (InterruptedException e) &#123; </span><br><span class="line">    <span class="comment">// fall through </span></span><br><span class="line">    &#125; </span><br><span class="line">    calculator.finished = <span class="keyword">true</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="线程的生命"><a href="#线程的生命" class="headerlink" title="线程的生命"></a>线程的生命</h2><h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>在 Java 程序中创建线程有几种方法。每个 Java程序至少包含一个线程：主线程。其它线程都是通过 Thread 构造器或实例化继承类 Thread 的类来创建的。</p><p>Java 线程可以通过直接实例化 Thread 对象或实例化继承 Thread 的对象来创建其它线程。在线程基础中的示例（其中，我们在十秒钟之内计算尽量多的素数）中，我们通过实例化 CalculatePrimes 类型的对象（它继承了 Thread），创建了一个线程。</p><p>当我们讨论 Java 程序中的线程时，也许会提到两个相关实体：完成工作的实际线程或代表线程的Thread 对象。正在运行的线程通常是由操作系统创建的；Thread 对象是由 Java VM 创建的，作为控制相关线程的一种方式。</p><h3 id="创建线程和启动线程并不相同"><a href="#创建线程和启动线程并不相同" class="headerlink" title="创建线程和启动线程并不相同"></a>创建线程和启动线程并不相同</h3><p>在一个线程对新线程的 Thread 对象调用 start() 方法之前，这个新线程并没有真正开始执行。<br>Thread 对象在其线程真正启动之前就已经存在了，而且其线程退出之后仍然存在。这可以让您控制或获取关于已创建的线程的信息，即使线程还没有启动或已经完成了。</p><p>通常在构造器中通过 start()启动线程并不是好主意。这样做，会把部分构造的对象暴露给新的线程。如果对象拥有一个线程，那么它应该提供一个启动该线程的 start() 或 init() 方法，而不是从构造器中启动它。</p><h3 id="结束线程"><a href="#结束线程" class="headerlink" title="结束线程"></a>结束线程</h3><p>线程会以以下三种方式之一结束：</p><ul><li>线程到达其 run() 方法的末尾。</li><li>线程抛出一个未捕获到的 Exception 或 Error。</li><li>另一个线程调用一个弃用的stop()方法。弃用是指这些方法仍然存在，但是您不应该在新代码中使用它们，并且应该尽量从现有代码中除去它们。<br>当 Java 程序中的所有线程都完成时，程序就退出了。</li></ul><h3 id="加入线程"><a href="#加入线程" class="headerlink" title="加入线程"></a>加入线程</h3><p>Thread API 包含了等待另一个线程完成的方法：join() 方法。当调用 Thread.join() 时，调用线程将阻塞，直到目标线程完成为止。</p><p>Thread.join() 通常由使用线程的程序使用，以将大问题划分成许多小问题，每个小问题分配一个线程。本章结尾处的示例创建了十个线程，启动它们，然后使用Thread.join() 等待它们全部完成。</p><h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>除了何时使用 Thread.join() 和 Object.wait() 外，线程调度和执行的计时是不确定的。如果两个线程同时运行，而且都不等待，您必须假设在任何两个指令之间，其它线程都可以运行并修改程序变量。如果线程要访问其它线程可以看见的变量，如从静态字段（全局变量）直接或间接引用的数据，则必须使用同步以确保数据一致性。</p><p>在以下的简单示例中，我们将创建并启动两个线程，每个线程都打印两行到 System.out</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoThreads</span> </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        System.out.println(<span class="string">"A"</span>); </span><br><span class="line">        System.out.println(<span class="string">"B"</span>); </span><br><span class="line">    &#125; </span><br><span class="line"> &#125; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread2</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            System.out.println(<span class="string">"1"</span>); </span><br><span class="line">            System.out.println(<span class="string">"2"</span>); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">new</span> Thread1().start(); </span><br><span class="line">        <span class="keyword">new</span> Thread2().start(); </span><br><span class="line">    &#125; </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><p>我们并不知道这些行按什么顺序执行，只知道“1”在“2”之前打印，以及“A”在“B”之前打印,输出可能是”12AB”、”1A2B”等等的任何一种。</p><h3 id="休眠"><a href="#休眠" class="headerlink" title="休眠"></a>休眠</h3><p>Thread API 包含了一个sleep()方法，它将使当前线程进入等待状态，直到过了一段指定时间，或者直到另一个线程对当前线程的 Thread 对象调用了 Thread.interrupt()，从而中断了线程。当过了指定时间后，线程又将变成可运行的，并且回到调度程序的可运行线程队列中。</p><p>如果线程是由对 Thread.interrupt() 的调用而中断的，那么休眠的线程会抛出<br>InterruptedException，这样线程就知道它是由中断唤醒的，就不必查看计时器是否过期。</p><p>Thread.yield() 方法就象 Thread.sleep() 一样，但它并不引起休眠，而只是暂停当前线程片刻，这样其它线程就可以运行了。在大多数实现中，当较高优先级的线程调用 Thread.yield() 时，较低优先级的线程就不会运行。</p><p>CalculatePrimes 示例使用了一个后台线程计算素数，然后休眠十秒钟。当计时器过期后，它就会设置一个标志，表示已经过了十秒。</p><h3 id="守护程序线程"><a href="#守护程序线程" class="headerlink" title="守护程序线程"></a>守护程序线程</h3><p>我们提到过当 Java 程序的所有线程都完成时，该程序就退出，但这并不完全正确。隐藏的系统线程，如垃圾收集线程和由JVM创建的其它线程会怎么样？我们没有办法停止这些线程。如果那些线程正在运行，那么 Java 程序怎么退出呢？</p><p>这些系统线程称作守护程序线程。Java程序实际上是在它的所有非守护程序线程完成后退出的。</p><p>任何线程都可以变成守护程序线程。可以通过调用 Thread.setDaemon() 方法来指明某个线程是守护程序线程。您也许想要使用守护程序线程作为在程序中创建的后台线程，如计时器线程或其它延迟的事件线程，只有当其它非守护程序线程正在运行时，这些线程才有用。</p><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>在这个示例中，TenThreads显示了一个创建了十个线程的程序，每个线程都执行一部分工作。该程序等待所有线程全部完成，然后收集结果。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TenThreads</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="keyword">int</span> max = Integer.MIN_VALUE; </span><br><span class="line">    <span class="keyword">int</span>[] ourArray; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(<span class="keyword">int</span>[] ourArray)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">this</span>.ourArray = ourArray; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// Find the maximum value in our particular piece of the array </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ourArray.length; i++) </span><br><span class="line">            max = Math.max(max, ourArray[i]); </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMax</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            <span class="keyword">return</span> max; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        WorkerThread[] threads = <span class="keyword">new</span> WorkerThread[<span class="number">10</span>]; </span><br><span class="line">        <span class="keyword">int</span>[][] bigMatrix = getBigHairyMatrix(); </span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE; </span><br><span class="line"> </span><br><span class="line">        <span class="comment">// Give each thread a slice of the matrix to work with </span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; </span><br><span class="line">            threads[i] = <span class="keyword">new</span> WorkerThread(bigMatrix[i]); </span><br><span class="line">             threads[i].start(); </span><br><span class="line">             &#125; </span><br><span class="line">        <span class="comment">// Wait for each thread to finish </span></span><br><span class="line">        <span class="keyword">try</span> &#123; </span><br><span class="line">             <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; </span><br><span class="line">             threads[i].join(); </span><br><span class="line">             max = Math.max(max, threads[i].getMax()); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">catch</span> (InterruptedException e) &#123; </span><br><span class="line">         <span class="comment">// fall through </span></span><br><span class="line">        &#125; </span><br><span class="line">        System.out.println(<span class="string">"Maximum value was "</span> + max); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>就象程序一样，线程有生命周期：它们启动、执行，然后完成。一个程序或进程也许包含多个线程，而这些线程看来互相单独地执行。</p><p>线程是通过实例化 Thread 对象或实例化继承 Thread 的对象来创建的，但在对新的 Thread 对象调用 start() 方法之前，这个线程并没有开始执行。当线程运行到其 run() 方法的末尾或抛出未经处理的异常时，它们就结束了。</p><p>sleep() 方法可以用于等待一段特定时间；而 join()方法可能用于等到另一个线程完成。</p><h2 id="共享对数据的访问"><a href="#共享对数据的访问" class="headerlink" title="共享对数据的访问"></a>共享对数据的访问</h2><h3 id="受控访问的同步"><a href="#受控访问的同步" class="headerlink" title="受控访问的同步"></a>受控访问的同步</h3><p>为了确保可以在线程之间以受控方式共享数据，Java语言提供了两个关键字：synchronized 和volatile。</p><p>Synchronized 有两个重要含义：它确保了一次只有一个线程可以执行代码的受保护部分（互斥，mutual exclusion或者说mutex），而且它确保了一个线程更改的数据对于其它线程是可见的（更改的可见性）。</p><p>如果没有同步，数据很容易就处于不一致状态。例如，如果一个线程正在更新两个相关值（比如，粒子的位置和速率），而另一个线程正在读取这两个值，有可能在第一个线程只写了一个值，还没有写另一个值的时候，调度第二个线程运行，这样它就会看到一个旧值和一个新值。同步让我们可以定义必须原子地运行的代码块，这样对于其他线程而言，它们要么都执行，要么都不执行。</p><p>同步的原子执行或互斥方面类似于其它操作环境中的临界段的概念。</p><h3 id="用锁保护的原子代码块"><a href="#用锁保护的原子代码块" class="headerlink" title="用锁保护的原子代码块"></a>用锁保护的原子代码块</h3><p>Volatile 对于确保每个线程看到最新的变量值非常有用，但有时我们需要保护比较大的代码片段，如涉及更新多个变量的片段。</p><p>同步使用监控器（monitor）或锁的概念，以协调对特定代码块的访问。</p><p>每个 Java 对象都有一个相关的锁。同一时间只能有一个线程持有 Java 锁。当线程进入synchronized代码块时，线程会阻塞并等待，直到锁可用，当它可用时，就会获得这个锁，然后执行代码块。当控制退出受保护的代码块时，即到达了代码块末尾或者抛出了没有在 synchronized 块中捕获的异常时，它就会释放该锁。</p><p>这样，每次只有一个线程可以执行受给定监控器保护的代码块。从其它线程的角度看，该代码块可以看作是原子的，它要么全部执行，要么根本不执行。</p><h3 id="同步例子"><a href="#同步例子" class="headerlink" title="同步例子"></a>同步例子</h3><p>使用 synchronized 块可以让您将一组相关更新作为一个集合来执行，而不必担心其它线程中断或看到计算的中间结果。以下示例代码将打印“1 0”或“01”。如果没有同步，它还会打印“1 1”（或“0 0”，随便您信不信）。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncExample</span> </span>&#123; </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> lockObject = <span class="keyword">new</span> Object(); </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            <span class="keyword">synchronized</span> (lockObject) &#123; </span><br><span class="line">                x = y = <span class="number">0</span>; </span><br><span class="line">                System.out.println(x); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">     &#125; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread2</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">             <span class="keyword">synchronized</span> (lockObject) &#123; </span><br><span class="line">             x = y = <span class="number">1</span>; </span><br><span class="line">             System.out.println(y); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">     <span class="keyword">new</span> Thread1().run(); </span><br><span class="line">     <span class="keyword">new</span> Thread2().run(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在这两个线程中都必须使用同步，以便使这个程序正确工作。</p><h3 id="Java-锁定"><a href="#Java-锁定" class="headerlink" title="Java 锁定"></a>Java 锁定</h3><p>Java 锁定合并了一种互斥形式。每次只有一个线程可以持有锁。锁用于保护代码块或整个方法，必须记住是锁的身份保护了代码块，而不是代码块本身，这一点很重要。一个锁可以保护许多代码块或方法。</p><p>反之，仅仅因为代码块由锁保护并不表示两个线程不能同时执行该代码块。它只表示如果两个线程正在等待相同的锁，则它们不能同时执行该代码。</p><p>在以下示例中，两个线程可以同时不受限制地执行 setLastAccess() 中的 synchronized 块，因为每个线程有一个不同的 thingie 值。因此，synchronized 代码块受到两个正在执行的线程中不同锁的保护。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncExample</span> </span>&#123; </span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thingie</span> </span>&#123; </span><br><span class="line">         <span class="keyword">private</span> Date lastAccess; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setLastAccess</span><span class="params">(Date date)</span> </span>&#123; </span><br><span class="line">            <span class="keyword">this</span>.lastAccess = date; </span><br><span class="line">         &#125; </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">         <span class="keyword">private</span> Thingie thingie; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="title">MyThread</span><span class="params">(Thingie thingie)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">this</span>.thingie = thingie; </span><br><span class="line">         &#125; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            thingie.setLastAccess(<span class="keyword">new</span> Date()); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123; </span><br><span class="line">         Thingie thingie1 = <span class="keyword">new</span> Thingie(), </span><br><span class="line">         thingie2 = <span class="keyword">new</span> Thingie(); </span><br><span class="line">         <span class="keyword">new</span> MyThread(thingie1).start(); </span><br><span class="line">         <span class="keyword">new</span> MyThread(thingie2).start(); </span><br><span class="line">     &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="同步的方法"><a href="#同步的方法" class="headerlink" title="同步的方法"></a>同步的方法</h3><p>创建 synchronized 块的最简单方法是将方法声明成synchronized。这表示在进入方法主体之前，调用者必须获得锁：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setXY</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">this</span>.x = x; </span><br><span class="line">         <span class="keyword">this</span>.y = y; </span><br><span class="line">     &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>对于普通的 synchronized 方法，这个锁是一个对象，将针对它调用方法。对于静态 synchronized 方法，这个锁是与 Class 对象相关的监控器，在该对象中声明了方法。</p><p>仅仅因为 setXY() 被声明成 synchronized 并不表示两个不同的线程不能同时执行 setXY()，只要它们调用不同的 Point 实例的 setXY() 就可同时执行。对于一个 Point 实例，一次只能有一个线程执行 setXY()，或 Point 的任何其它 synchronized 方法。</p><h3 id="同步的块"><a href="#同步的块" class="headerlink" title="同步的块"></a>同步的块</h3><p>synchronized 块的语法比synchronized方法稍微复杂一点，因为还需要显式地指定锁要保护哪个块。Point 的以下版本等价于前一页中显示的版本：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setXY</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123; </span><br><span class="line">             <span class="keyword">this</span>.x = x; </span><br><span class="line">             <span class="keyword">this</span>.y = y; </span><br><span class="line">         &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>使用 this 引用作为锁很常见，但这并不是必需的。这表示该代码块将与这个类中的 synchronized 方法使用同一个锁。</p><p>由于同步防止了多个线程同时执行一个代码块，因此性能上就有问题，即使是在单处理器系统上。最好在尽可能最小的需要保护的代码块上使用同步。</p><p>访问局部（基于堆栈的）变量从来不需要受到保护，因为它们只能被自己所属的线程访问。</p><h3 id="大多数类并没有同步"><a href="#大多数类并没有同步" class="headerlink" title="大多数类并没有同步"></a>大多数类并没有同步</h3><p>因为同步会带来小小的性能损失，大多数通用类，如 java.util 中的 Collection 类，不在内部使用同步。这表示在没有附加同步的情况下，不能在多个线程中使用诸如 HashMap 这样的类。</p><p>通过每次访问共享集合中的方法时使用同步，可以在多线程应用程序中使用 Collection 类。对于任何给定的集合，每次必须用同一个锁进行同步。通常可以选择集合对象本身作为锁。</p><p>下一页中的示例类 SimpleCache显示了如何使用HashMap以线程安全的方式提供高速缓存。但是，通常适当的同步并不只是意味着同步每个方法。</p><p>Collections 类提供了一组便利的用于 List、Map 和 Set 接口的封装器。您可以用Collections.synchronizedMap 封装Map，它将确保所有对该映射的访问都被正确同步。<br>如果类的文档没有说明它是线程安全的，那么您必须假设它不是。</p><h3 id="示例：简单的线程安全的高速缓存"><a href="#示例：简单的线程安全的高速缓存" class="headerlink" title="示例：简单的线程安全的高速缓存"></a>示例：简单的线程安全的高速缓存</h3><p>如以下代码样本所示，SimpleCache.java使用HashMap为对象装入器提供了一个简单的高速缓存。load() 方法知道怎样按对象的键装入对象。在一次装入对象之后，该对象就被存储到高速缓存中，这样以后的访问就会从高速缓存中检索它，而不是每次都全部地装入它。对共享高速缓存的每个访问都受到synchronized块保护。由于它被正确同步，所以多个线程可以同时调用 getObject 和clearCache 方法，而没有数据损坏的风险。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleCache</span> </span>&#123; </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">final</span> Map cache = <span class="keyword">new</span> HashMap(); </span><br><span class="line">         <span class="function"><span class="keyword">public</span> Object <span class="title">load</span><span class="params">(String objectName)</span> </span>&#123; </span><br><span class="line">         <span class="comment">// load the object somehow </span></span><br><span class="line">     &#125; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearCache</span><span class="params">()</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (cache) &#123; </span><br><span class="line">            cache.clear(); </span><br><span class="line">         &#125; </span><br><span class="line">     &#125; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> Object <span class="title">getObject</span><span class="params">(String objectName)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (cache) &#123; </span><br><span class="line">             Object o = cache.get(objectName); </span><br><span class="line">             <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123; </span><br><span class="line">                 o = load(objectName); </span><br><span class="line">                 cache.put(objectName, o); </span><br><span class="line">             &#125; </span><br><span class="line">         &#125; </span><br><span class="line">     <span class="keyword">return</span> o; </span><br><span class="line">     &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>由于线程执行的计时是不确定的，我们需要小心，以控制线程对共享数据的访问。否则，多个并发线程会互相干扰对方的更改，从而损坏数据，或者其它线程也许不能及时看到对共享数据的更改。</p><p>通过使用同步来保护对共享变量的访问，我们可以确保线程以可预料的方式与程序变量进行交互.</p><p>每个 Java 对象都可以充当锁，synchronized块可以确保一次只有一个线程执行由给定锁保护的synchronized 代码。</p></div><footer class="post-footer"><div class="post-tags"><a href="/tags/little-eight/" rel="tag"># little_eight</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/12/03/SpringBoot整合Dubbo（入门篇)/" rel="next" title="SpringBoot整合Dubbo(入门篇)"><i class="fa fa-chevron-left"></i> SpringBoot整合Dubbo(入门篇)</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"><a href="/2018/12/28/Linux命令大全/" rel="prev" title="Linux命令大全">Linux命令大全 <i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zODE4Ni8xNDcxNA=="></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap">站点概览</li></ul><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">小八</p><div class="site-description motion-element" itemprop="description"></div></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">29</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/"><span class="site-state-item-count">6</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/"><span class="site-state-item-count">2</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/little-eight-china" title="GitHub &rarr; https://github.com/little-eight-china" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a> </span><span class="links-of-author-item"><a href="https://blog.csdn.net/h295928126" title="CSDN &rarr; https://blog.csdn.net/h295928126" rel="noopener" target="_blank"><i class="fa fa-fw fa-crosshairs"></i>CSDN</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> 成人链接</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="https://acris.me/" title="https://acris.me/" rel="noopener" target="_blank">Acris' Blog</a></li></ul></div></div></div><!--noindex--><div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程基础"><span class="nav-number">1.</span> <span class="nav-text">线程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是线程？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#每个-Java-程序都使用线程"><span class="nav-number">1.2.</span> <span class="nav-text">每个 Java 程序都使用线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-线程的风险"><span class="nav-number">1.3.</span> <span class="nav-text">Java 线程的风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.4.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的生命"><span class="nav-number">2.</span> <span class="nav-text">线程的生命</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建线程"><span class="nav-number">2.1.</span> <span class="nav-text">创建线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建线程和启动线程并不相同"><span class="nav-number">2.2.</span> <span class="nav-text">创建线程和启动线程并不相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束线程"><span class="nav-number">2.3.</span> <span class="nav-text">结束线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入线程"><span class="nav-number">2.4.</span> <span class="nav-text">加入线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度"><span class="nav-number">2.5.</span> <span class="nav-text">调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#休眠"><span class="nav-number">2.6.</span> <span class="nav-text">休眠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#守护程序线程"><span class="nav-number">2.7.</span> <span class="nav-text">守护程序线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子-1"><span class="nav-number">2.8.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.9.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享对数据的访问"><span class="nav-number">3.</span> <span class="nav-text">共享对数据的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#受控访问的同步"><span class="nav-number">3.1.</span> <span class="nav-text">受控访问的同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用锁保护的原子代码块"><span class="nav-number">3.2.</span> <span class="nav-text">用锁保护的原子代码块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步例子"><span class="nav-number">3.3.</span> <span class="nav-text">同步例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-锁定"><span class="nav-number">3.4.</span> <span class="nav-text">Java 锁定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步的方法"><span class="nav-number">3.5.</span> <span class="nav-text">同步的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步的块"><span class="nav-number">3.6.</span> <span class="nav-text">同步的块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大多数类并没有同步"><span class="nav-number">3.7.</span> <span class="nav-text">大多数类并没有同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例：简单的线程安全的高速缓存"><span class="nav-number">3.8.</span> <span class="nav-text">示例：简单的线程安全的高速缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-1"><span class="nav-number">3.9.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div></div></div><!--/noindex--></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span> <span class="with-love" id="animate"><i class="fa fa-user"></i> </span><span class="author" itemprop="copyrightHolder">小八</span></div><div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div><span class="post-meta-divider">|</span><div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.1</div><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="post-meta-item-icon"><i class="fa fa-user"></i> </span><span class="site-uv" title="总访客量"><span class="busuanzi-value" id="busuanzi_value_site_uv"></span> </span><span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="fa fa-eye"></i> </span><span class="site-pv" title="总访问量"><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js"></script><script src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script><script src="/js/src/utils.js?v=7.0.1"></script><script src="/js/src/motion.js?v=7.0.1"></script><script src="/js/src/affix.js?v=7.0.1"></script><script src="/js/src/schemes/pisces.js?v=7.0.1"></script><script src="/js/src/scrollspy.js?v=7.0.1"></script><script src="/js/src/post-details.js?v=7.0.1"></script><script src="/js/src/next-boot.js?v=7.0.1"></script><script>window.livereOptions={refer:"2018/12/10/Java多线程/"},function(e,t){var n,r=e.getElementsByTagName(t)[0];"function"!=typeof LivereTower&&((n=e.createElement(t)).src="https://cdn-city.livere.com/js/embed.dist.js",n.async=!0,r.parentNode.insertBefore(n,r))}(document,"script")</script><script>// Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.json";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
+<link rel="stylesheet" href="/css/main.css">
 
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
 
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"little8.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="线程基础什么是线程？几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。 线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。  有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程">
+<meta property="og:url" content="https://little8.top/2018/12/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="八达博客">
+<meta property="og:description" content="线程基础什么是线程？几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。 线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。  有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-10T05:49:27.000Z">
+<meta property="article:modified_time" content="2021-09-30T03:12:54.773Z">
+<meta property="article:tag" content="little_eight">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://little8.top/2018/12/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java多线程 | 八达博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">八达博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://little8.top/2018/12/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/head.png">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="八达博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java多线程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-10 13:49:27" itemprop="dateCreated datePublished" datetime="2018-12-10T13:49:27+08:00">2018-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-30 11:12:54" itemprop="dateModified" datetime="2021-09-30T11:12:54+08:00">2021-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+        <h2 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h2><h3 id="什么是线程？"><a href="#什么是线程？" class="headerlink" title="什么是线程？"></a>什么是线程？</h3><p>几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。</p>
+<p>线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的<br>概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。 </p>
+<p>有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行路径，每个线程有它自己的堆栈、自己的程序计数器和自己的局部变量。但是，与分隔的进程相比，进程中的线程之间的隔离程度要小。它们共享内存、文件句柄和其它每个进程应有的状态。 </p>
+<p>进程可以支持多个线程，它们看似同时执行，但互相之间并不同步。一个进程中的多个线程共享相同的内存地址空间，这就意味着它们可以访问相同的变量和对象，而且它们从同一堆中分配对象。尽管这让线程之间共享信息变得更容易，但您必须小心，确保它们不会妨碍同一进程里的其它线程。</p>
+<p>Java 线程工具和 API 看似简单。但是，编写有效使用线程的复杂程序并不十分容易。因为有多个线程共存在相同的内存空间中并共享相同的变量，所以您必须小心，确保您的线程不会互相干扰。 </p>
+<h3 id="每个-Java-程序都使用线程"><a href="#每个-Java-程序都使用线程" class="headerlink" title="每个 Java 程序都使用线程"></a>每个 Java 程序都使用线程</h3><p>每个 Java 程序都至少有一个线程 — 主线程。当一个 Java 程序启动时，JVM 会创建主线程，并在该线程中调用程序的 main() 方法。 JVM 还创建了其它线程，您通常都看不到它们 — 例如，与垃圾收集、对象终止和其它 JVM 内务处理任务相关的线程。其它工具也创建线程，如 AWT（抽象窗口工具箱（Abstract Windowing Toolkit））或 Swing UI 工具箱、servlet 容器、应用程序服务器和 RMI（远程方法调用（Remote Method Invocation）） </p>
+<h3 id="Java-线程的风险"><a href="#Java-线程的风险" class="headerlink" title="Java 线程的风险"></a>Java 线程的风险</h3><p>虽然 Java 线程工具非常易于使用，但当我们创建多线程程序时，应该尽量避免一些风险。<br>当多个线程访问同一数据项（如静态字段、可全局访问对象的实例字段或共享集合）时，需要确保它们协调了对数据的访问，这样它们都可以看到数据的一致视图，而且相互不会干扰另一方的更改。<br>为了实现这个目的，Java 语言提供了两个关键字：synchronized 和 volatile。当从多个线程中访问变量时，必须确保对该访问正确地进行了同步。对于简单变量，将变量声明成volatile 也许就足够了，但在大多数情况下，需要使用同步。<br>如果将要使用同步来保护对共享变量的访问，那么必须确保在程序中所有访问该变量的地方都使用同步。</p>
+<p>虽然线程可以大大简化许多类型的应用程序，过度使用线程可能会危及程序的性能及其可维护性。<br>线程消耗了资源。因此，在不降低性能的情况下，可以创建的线程的数量是有限制的。 尤其在单处理器系统中，使用多个线程不会使主要消耗 CPU 资源的程序运行得更快。 </p>
+<span id="more"></span>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>以下示例使用两个线程，一个用于计时，一个用于执行实际工作。主线程使用非常简单的算法计算<br>素数。<br>在它启动之前，它创建并启动一个计时器线程，这个线程会休眠十秒钟，然后设置一个主线程要检查的标志。十秒钟之后，主线程将停止。请注意，共享标志被声明成 volatile。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalculatePrimes</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_PRIMES = <span class="number">1000000</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TEN_SECONDS = <span class="number">10000</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> finished = <span class="keyword">false</span>; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">int</span>[] primes = <span class="keyword">new</span> <span class="keyword">int</span>[MAX_PRIMES]; </span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; count&lt;MAX_PRIMES; i++) &#123; </span><br><span class="line">        <span class="comment">// Check to see if the timer has expired </span></span><br><span class="line">            <span class="keyword">if</span> (finished) &#123; </span><br><span class="line">            <span class="keyword">break</span>; &#125; </span><br><span class="line">        <span class="keyword">boolean</span> prime = <span class="keyword">true</span>; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;count; j++) &#123; </span><br><span class="line">            <span class="keyword">if</span> (i % primes[j] == <span class="number">0</span>) &#123; </span><br><span class="line">                  prime = <span class="keyword">false</span>; </span><br><span class="line">               <span class="keyword">break</span>; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">if</span> (prime) &#123; </span><br><span class="line">            primes[count++] = i; </span><br><span class="line">            System.out.println(<span class="string">&quot;Found prime: &quot;</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"> &#125; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">    CalculatePrimes calculator = <span class="keyword">new</span> CalculatePrimes(); </span><br><span class="line">    calculator.start(); </span><br><span class="line">    <span class="keyword">try</span> &#123; </span><br><span class="line">    Thread.sleep(TEN_SECONDS); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">catch</span> (InterruptedException e) &#123; </span><br><span class="line">    <span class="comment">// fall through </span></span><br><span class="line">    &#125; </span><br><span class="line">    calculator.finished = <span class="keyword">true</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
+<h2 id="线程的生命"><a href="#线程的生命" class="headerlink" title="线程的生命"></a>线程的生命</h2><h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>在 Java 程序中创建线程有几种方法。每个 Java程序至少包含一个线程：主线程。其它线程都是通过 Thread 构造器或实例化继承类 Thread 的类来创建的。</p>
+<p>Java 线程可以通过直接实例化 Thread 对象或实例化继承 Thread 的对象来创建其它线程。在线程基础中的示例（其中，我们在十秒钟之内计算尽量多的素数）中，我们通过实例化 CalculatePrimes 类型的对象（它继承了 Thread），创建了一个线程。 </p>
+<p>当我们讨论 Java 程序中的线程时，也许会提到两个相关实体：完成工作的实际线程或代表线程的Thread 对象。正在运行的线程通常是由操作系统创建的；Thread 对象是由 Java VM 创建的，作为控制相关线程的一种方式。 </p>
+<h3 id="创建线程和启动线程并不相同"><a href="#创建线程和启动线程并不相同" class="headerlink" title="创建线程和启动线程并不相同"></a>创建线程和启动线程并不相同</h3><p>在一个线程对新线程的 Thread 对象调用 start() 方法之前，这个新线程并没有真正开始执行。<br>Thread 对象在其线程真正启动之前就已经存在了，而且其线程退出之后仍然存在。这可以让您控制或获取关于已创建的线程的信息，即使线程还没有启动或已经完成了。 </p>
+<p>通常在构造器中通过 start()启动线程并不是好主意。这样做，会把部分构造的对象暴露给新的线程。如果对象拥有一个线程，那么它应该提供一个启动该线程的 start() 或 init() 方法，而不是从构造器中启动它。</p>
+<h3 id="结束线程"><a href="#结束线程" class="headerlink" title="结束线程"></a>结束线程</h3><p>线程会以以下三种方式之一结束：</p>
+<ul>
+<li>线程到达其 run() 方法的末尾。</li>
+<li>线程抛出一个未捕获到的 Exception 或 Error。</li>
+<li>另一个线程调用一个弃用的stop()方法。弃用是指这些方法仍然存在，但是您不应该在新代码中使用它们，并且应该尽量从现有代码中除去它们。<br>当 Java 程序中的所有线程都完成时，程序就退出了。</li>
+</ul>
+<h3 id="加入线程"><a href="#加入线程" class="headerlink" title="加入线程"></a>加入线程</h3><p>Thread API 包含了等待另一个线程完成的方法：join() 方法。当调用 Thread.join() 时，调用线程将阻塞，直到目标线程完成为止。</p>
+<p>Thread.join() 通常由使用线程的程序使用，以将大问题划分成许多小问题，每个小问题分配一个线程。本章结尾处的示例创建了十个线程，启动它们，然后使用Thread.join() 等待它们全部完成。 </p>
+<h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>除了何时使用 Thread.join() 和 Object.wait() 外，线程调度和执行的计时是不确定的。如果两个线程同时运行，而且都不等待，您必须假设在任何两个指令之间，其它线程都可以运行并修改程序变量。如果线程要访问其它线程可以看见的变量，如从静态字段（全局变量）直接或间接引用的数据，则必须使用同步以确保数据一致性。 </p>
+<p>在以下的简单示例中，我们将创建并启动两个线程，每个线程都打印两行到 System.out</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoThreads</span> </span>&#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        System.out.println(<span class="string">&quot;A&quot;</span>); </span><br><span class="line">        System.out.println(<span class="string">&quot;B&quot;</span>); </span><br><span class="line">    &#125; </span><br><span class="line"> &#125; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread2</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            System.out.println(<span class="string">&quot;1&quot;</span>); </span><br><span class="line">            System.out.println(<span class="string">&quot;2&quot;</span>); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">new</span> Thread1().start(); </span><br><span class="line">        <span class="keyword">new</span> Thread2().start(); </span><br><span class="line">    &#125; </span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+<p>我们并不知道这些行按什么顺序执行，只知道“1”在“2”之前打印，以及“A”在“B”之前打印,输出可能是”12AB”、”1A2B”等等的任何一种。</p>
+<h3 id="休眠"><a href="#休眠" class="headerlink" title="休眠"></a>休眠</h3><p>Thread API 包含了一个sleep()方法，它将使当前线程进入等待状态，直到过了一段指定时间，或者直到另一个线程对当前线程的 Thread 对象调用了 Thread.interrupt()，从而中断了线程。当过了指定时间后，线程又将变成可运行的，并且回到调度程序的可运行线程队列中。 </p>
+<p>如果线程是由对 Thread.interrupt() 的调用而中断的，那么休眠的线程会抛出<br>InterruptedException，这样线程就知道它是由中断唤醒的，就不必查看计时器是否过期。 </p>
+<p>Thread.yield() 方法就象 Thread.sleep() 一样，但它并不引起休眠，而只是暂停当前线程片刻，这样其它线程就可以运行了。在大多数实现中，当较高优先级的线程调用 Thread.yield() 时，较低优先级的线程就不会运行。 </p>
+<p>CalculatePrimes 示例使用了一个后台线程计算素数，然后休眠十秒钟。当计时器过期后，它就会设置一个标志，表示已经过了十秒。</p>
+<h3 id="守护程序线程"><a href="#守护程序线程" class="headerlink" title="守护程序线程"></a>守护程序线程</h3><p>我们提到过当 Java 程序的所有线程都完成时，该程序就退出，但这并不完全正确。隐藏的系统线程，如垃圾收集线程和由JVM创建的其它线程会怎么样？我们没有办法停止这些线程。如果那些线程正在运行，那么 Java 程序怎么退出呢？ </p>
+<p>这些系统线程称作守护程序线程。Java程序实际上是在它的所有非守护程序线程完成后退出的。 </p>
+<p>任何线程都可以变成守护程序线程。可以通过调用 Thread.setDaemon() 方法来指明某个线程是守护程序线程。您也许想要使用守护程序线程作为在程序中创建的后台线程，如计时器线程或其它延迟的事件线程，只有当其它非守护程序线程正在运行时，这些线程才有用。 </p>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p>在这个示例中，TenThreads显示了一个创建了十个线程的程序，每个线程都执行一部分工作。该程序等待所有线程全部完成，然后收集结果。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TenThreads</span> </span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">    <span class="keyword">int</span> max = Integer.MIN_VALUE; </span><br><span class="line">    <span class="keyword">int</span>[] ourArray; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(<span class="keyword">int</span>[] ourArray)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">this</span>.ourArray = ourArray; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// Find the maximum value in our particular piece of the array </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ourArray.length; i++) </span><br><span class="line">            max = Math.max(max, ourArray[i]); </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMax</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            <span class="keyword">return</span> max; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        WorkerThread[] threads = <span class="keyword">new</span> WorkerThread[<span class="number">10</span>]; </span><br><span class="line">        <span class="keyword">int</span>[][] bigMatrix = getBigHairyMatrix(); </span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE; </span><br><span class="line"> </span><br><span class="line">        <span class="comment">// Give each thread a slice of the matrix to work with </span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; </span><br><span class="line">            threads[i] = <span class="keyword">new</span> WorkerThread(bigMatrix[i]); </span><br><span class="line">             threads[i].start(); </span><br><span class="line">             &#125; </span><br><span class="line">        <span class="comment">// Wait for each thread to finish </span></span><br><span class="line">        <span class="keyword">try</span> &#123; </span><br><span class="line">             <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123; </span><br><span class="line">             threads[i].join(); </span><br><span class="line">             max = Math.max(max, threads[i].getMax()); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">catch</span> (InterruptedException e) &#123; </span><br><span class="line">         <span class="comment">// fall through </span></span><br><span class="line">        &#125; </span><br><span class="line">        System.out.println(<span class="string">&quot;Maximum value was &quot;</span> + max); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>就象程序一样，线程有生命周期：它们启动、执行，然后完成。一个程序或进程也许包含多个线程，而这些线程看来互相单独地执行。 </p>
+<p>线程是通过实例化 Thread 对象或实例化继承 Thread 的对象来创建的，但在对新的 Thread 对象调用 start() 方法之前，这个线程并没有开始执行。当线程运行到其 run() 方法的末尾或抛出未经处理的异常时，它们就结束了。 </p>
+<p>sleep() 方法可以用于等待一段特定时间；而 join()方法可能用于等到另一个线程完成。</p>
+<h2 id="共享对数据的访问"><a href="#共享对数据的访问" class="headerlink" title="共享对数据的访问"></a>共享对数据的访问</h2><h3 id="受控访问的同步"><a href="#受控访问的同步" class="headerlink" title="受控访问的同步"></a>受控访问的同步</h3><p>为了确保可以在线程之间以受控方式共享数据，Java语言提供了两个关键字：synchronized 和volatile。 </p>
+<p>Synchronized 有两个重要含义：它确保了一次只有一个线程可以执行代码的受保护部分（互斥，mutual exclusion或者说mutex），而且它确保了一个线程更改的数据对于其它线程是可见的（更改的可见性）。 </p>
+<p>如果没有同步，数据很容易就处于不一致状态。例如，如果一个线程正在更新两个相关值（比如，粒子的位置和速率），而另一个线程正在读取这两个值，有可能在第一个线程只写了一个值，还没有写另一个值的时候，调度第二个线程运行，这样它就会看到一个旧值和一个新值。同步让我们可以定义必须原子地运行的代码块，这样对于其他线程而言，它们要么都执行，要么都不执行。 </p>
+<p>同步的原子执行或互斥方面类似于其它操作环境中的临界段的概念。 </p>
+<h3 id="用锁保护的原子代码块"><a href="#用锁保护的原子代码块" class="headerlink" title="用锁保护的原子代码块"></a>用锁保护的原子代码块</h3><p>Volatile 对于确保每个线程看到最新的变量值非常有用，但有时我们需要保护比较大的代码片段，如涉及更新多个变量的片段。 </p>
+<p>同步使用监控器（monitor）或锁的概念，以协调对特定代码块的访问。 </p>
+<p>每个 Java 对象都有一个相关的锁。同一时间只能有一个线程持有 Java 锁。当线程进入synchronized代码块时，线程会阻塞并等待，直到锁可用，当它可用时，就会获得这个锁，然后执行代码块。当控制退出受保护的代码块时，即到达了代码块末尾或者抛出了没有在 synchronized 块中捕获的异常时，它就会释放该锁。 </p>
+<p>这样，每次只有一个线程可以执行受给定监控器保护的代码块。从其它线程的角度看，该代码块可以看作是原子的，它要么全部执行，要么根本不执行。 </p>
+<h3 id="同步例子"><a href="#同步例子" class="headerlink" title="同步例子"></a>同步例子</h3><p>使用 synchronized 块可以让您将一组相关更新作为一个集合来执行，而不必担心其它线程中断或看到计算的中间结果。以下示例代码将打印“1 0”或“01”。如果没有同步，它还会打印“1 1”（或“0 0”，随便您信不信）。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncExample</span> </span>&#123; </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> lockObject = <span class="keyword">new</span> Object(); </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            <span class="keyword">synchronized</span> (lockObject) &#123; </span><br><span class="line">                x = y = <span class="number">0</span>; </span><br><span class="line">                System.out.println(x); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">     &#125; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thread2</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">             <span class="keyword">synchronized</span> (lockObject) &#123; </span><br><span class="line">             x = y = <span class="number">1</span>; </span><br><span class="line">             System.out.println(y); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">     <span class="keyword">new</span> Thread1().run(); </span><br><span class="line">     <span class="keyword">new</span> Thread2().run(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
+<p>在这两个线程中都必须使用同步，以便使这个程序正确工作。</p>
+<h3 id="Java-锁定"><a href="#Java-锁定" class="headerlink" title="Java 锁定"></a>Java 锁定</h3><p>Java 锁定合并了一种互斥形式。每次只有一个线程可以持有锁。锁用于保护代码块或整个方法，必须记住是锁的身份保护了代码块，而不是代码块本身，这一点很重要。一个锁可以保护许多代码块或方法。 </p>
+<p>反之，仅仅因为代码块由锁保护并不表示两个线程不能同时执行该代码块。它只表示如果两个线程正在等待相同的锁，则它们不能同时执行该代码。 </p>
+<p>在以下示例中，两个线程可以同时不受限制地执行 setLastAccess() 中的 synchronized 块，因为每个线程有一个不同的 thingie 值。因此，synchronized 代码块受到两个正在执行的线程中不同锁的保护。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncExample</span> </span>&#123; </span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Thingie</span> </span>&#123; </span><br><span class="line">         <span class="keyword">private</span> Date lastAccess; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setLastAccess</span><span class="params">(Date date)</span> </span>&#123; </span><br><span class="line">            <span class="keyword">this</span>.lastAccess = date; </span><br><span class="line">         &#125; </span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123; </span><br><span class="line">         <span class="keyword">private</span> Thingie thingie; </span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="title">MyThread</span><span class="params">(Thingie thingie)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">this</span>.thingie = thingie; </span><br><span class="line">         &#125; </span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">            thingie.setLastAccess(<span class="keyword">new</span> Date()); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123; </span><br><span class="line">         Thingie thingie1 = <span class="keyword">new</span> Thingie(), </span><br><span class="line">         thingie2 = <span class="keyword">new</span> Thingie(); </span><br><span class="line">         <span class="keyword">new</span> MyThread(thingie1).start(); </span><br><span class="line">         <span class="keyword">new</span> MyThread(thingie2).start(); </span><br><span class="line">     &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-                // show search results
+<h3 id="同步的方法"><a href="#同步的方法" class="headerlink" title="同步的方法"></a>同步的方法</h3><p>创建 synchronized 块的最简单方法是将方法声明成synchronized。这表示在进入方法主体之前，调用者必须获得锁： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setXY</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">this</span>.x = x; </span><br><span class="line">         <span class="keyword">this</span>.y = y; </span><br><span class="line">     &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-                if (isMatch) {
-                  // sort index by position of keyword
+<p>对于普通的 synchronized 方法，这个锁是一个对象，将针对它调用方法。对于静态 synchronized 方法，这个锁是与 Class 对象相关的监控器，在该对象中声明了方法。 </p>
+<p>仅仅因为 setXY() 被声明成 synchronized 并不表示两个不同的线程不能同时执行 setXY()，只要它们调用不同的 Point 实例的 setXY() 就可同时执行。对于一个 Point 实例，一次只能有一个线程执行 setXY()，或 Point 的任何其它 synchronized 方法。 </p>
+<h3 id="同步的块"><a href="#同步的块" class="headerlink" title="同步的块"></a>同步的块</h3><p>synchronized 块的语法比synchronized方法稍微复杂一点，因为还需要显式地指定锁要保护哪个块。Point 的以下版本等价于前一页中显示的版本： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setXY</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123; </span><br><span class="line">             <span class="keyword">this</span>.x = x; </span><br><span class="line">             <span class="keyword">this</span>.y = y; </span><br><span class="line">         &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>使用 this 引用作为锁很常见，但这并不是必需的。这表示该代码块将与这个类中的 synchronized 方法使用同一个锁。 </p>
+<p>由于同步防止了多个线程同时执行一个代码块，因此性能上就有问题，即使是在单处理器系统上。最好在尽可能最小的需要保护的代码块上使用同步。 </p>
+<p>访问局部（基于堆栈的）变量从来不需要受到保护，因为它们只能被自己所属的线程访问。 </p>
+<h3 id="大多数类并没有同步"><a href="#大多数类并没有同步" class="headerlink" title="大多数类并没有同步"></a>大多数类并没有同步</h3><p>因为同步会带来小小的性能损失，大多数通用类，如 java.util 中的 Collection 类，不在内部使用同步。这表示在没有附加同步的情况下，不能在多个线程中使用诸如 HashMap 这样的类。 </p>
+<p>通过每次访问共享集合中的方法时使用同步，可以在多线程应用程序中使用 Collection 类。对于任何给定的集合，每次必须用同一个锁进行同步。通常可以选择集合对象本身作为锁。</p>
+<p>下一页中的示例类 SimpleCache显示了如何使用HashMap以线程安全的方式提供高速缓存。但是，通常适当的同步并不只是意味着同步每个方法。 </p>
+<p>Collections 类提供了一组便利的用于 List、Map 和 Set 接口的封装器。您可以用Collections.synchronizedMap 封装Map，它将确保所有对该映射的访问都被正确同步。<br>如果类的文档没有说明它是线程安全的，那么您必须假设它不是。 </p>
+<h3 id="示例：简单的线程安全的高速缓存"><a href="#示例：简单的线程安全的高速缓存" class="headerlink" title="示例：简单的线程安全的高速缓存"></a>示例：简单的线程安全的高速缓存</h3><p>如以下代码样本所示，SimpleCache.java使用HashMap为对象装入器提供了一个简单的高速缓存。load() 方法知道怎样按对象的键装入对象。在一次装入对象之后，该对象就被存储到高速缓存中，这样以后的访问就会从高速缓存中检索它，而不是每次都全部地装入它。对共享高速缓存的每个访问都受到synchronized块保护。由于它被正确同步，所以多个线程可以同时调用 getObject 和clearCache 方法，而没有数据损坏的风险。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleCache</span> </span>&#123; </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">final</span> Map cache = <span class="keyword">new</span> HashMap(); </span><br><span class="line">         <span class="function"><span class="keyword">public</span> Object <span class="title">load</span><span class="params">(String objectName)</span> </span>&#123; </span><br><span class="line">         <span class="comment">// load the object somehow </span></span><br><span class="line">     &#125; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearCache</span><span class="params">()</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (cache) &#123; </span><br><span class="line">            cache.clear(); </span><br><span class="line">         &#125; </span><br><span class="line">     &#125; </span><br><span class="line">     <span class="function"><span class="keyword">public</span> Object <span class="title">getObject</span><span class="params">(String objectName)</span> </span>&#123; </span><br><span class="line">         <span class="keyword">synchronized</span> (cache) &#123; </span><br><span class="line">             Object o = cache.get(objectName); </span><br><span class="line">             <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123; </span><br><span class="line">                 o = load(objectName); </span><br><span class="line">                 cache.put(objectName, o); </span><br><span class="line">             &#125; </span><br><span class="line">         &#125; </span><br><span class="line">     <span class="keyword">return</span> o; </span><br><span class="line">     &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>由于线程执行的计时是不确定的，我们需要小心，以控制线程对共享数据的访问。否则，多个并发线程会互相干扰对方的更改，从而损坏数据，或者其它线程也许不能及时看到对共享数据的更改。 </p>
+<p>通过使用同步来保护对共享变量的访问，我们可以确保线程以可预料的方式与程序变量进行交互.</p>
+<p>每个 Java 对象都可以充当锁，synchronized块可以确保一次只有一个线程执行由给定锁保护的synchronized 代码。 </p>
 
-                  // merge hits into slices
+    </div>
 
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });</script><script>function addCount(Counter) {
-      var $visitors = $('.leancloud_visitors');
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
-        .done(function({ results }) {
-          if (results.length > 0) {
-            var counter = results[0];
-            
-            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
-            
-              .done(function() {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.time + 1);
-              })
-            
-              .fail(function ({ responseJSON }) {
-                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
-              })
-          } else {
-            
-              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
-                .done(function() {
-                  var $element = $(document.getElementById(url));
-                  $element.find('.leancloud-visitors-count').text(1);
-                })
-                .fail(function() {
-                  console.log('Failed to create');
-                });
-            
-          }
-        })
-        .fail(function ({ responseJSON }) {
-          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
-        });
-    }
+    
+    
     
 
-    $(function() {
-      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'SQiLPBGhsq8LePRY6TJxxRCd-gzGzoHsz')
-        .done(function({ api_server }) {
-          var Counter = function(method, url, data) {
-            return $.ajax({
-              method: method,
-              url: 'https://' + api_server + '/1.1' + url,
-              headers: {
-                'X-LC-Id': 'SQiLPBGhsq8LePRY6TJxxRCd-gzGzoHsz',
-                'X-LC-Key': 'QvnCTiERGex86aowso63wc4S',
-                'Content-Type': 'application/json',
-              },
-              data: data
-            });
-          };
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/little-eight/" rel="tag"># little_eight</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/03/SpringBoot%E6%95%B4%E5%90%88Dubbo%EF%BC%88%E5%85%A5%E9%97%A8%E7%AF%87)/" rel="prev" title="SpringBoot整合Dubbo(入门篇)">
+      <i class="fa fa-chevron-left"></i> SpringBoot整合Dubbo(入门篇)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/12/28/Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" rel="next" title="Linux命令大全">
+      Linux命令大全 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
           
-            addCount(Counter);
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zODE4Ni8xNDcxNA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
           
-        });
-    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script></body></html>
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">线程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AA-Java-%E7%A8%8B%E5%BA%8F%E9%83%BD%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">每个 Java 程序都使用线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%A3%8E%E9%99%A9"><span class="nav-number">1.3.</span> <span class="nav-text">Java 线程的风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">1.4.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD"><span class="nav-number">2.</span> <span class="nav-text">线程的生命</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">创建线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B%E5%B9%B6%E4%B8%8D%E7%9B%B8%E5%90%8C"><span class="nav-number">2.2.</span> <span class="nav-text">创建线程和启动线程并不相同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">结束线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">加入线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6"><span class="nav-number">2.5.</span> <span class="nav-text">调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%91%E7%9C%A0"><span class="nav-number">2.6.</span> <span class="nav-text">休眠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E7%A8%8B%E5%BA%8F%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.7.</span> <span class="nav-text">守护程序线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="nav-number">2.8.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.9.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%AF%B9%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">3.</span> <span class="nav-text">共享对数据的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%97%E6%8E%A7%E8%AE%BF%E9%97%AE%E7%9A%84%E5%90%8C%E6%AD%A5"><span class="nav-number">3.1.</span> <span class="nav-text">受控访问的同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E9%94%81%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%8E%9F%E5%AD%90%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">用锁保护的原子代码块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BE%8B%E5%AD%90"><span class="nav-number">3.3.</span> <span class="nav-text">同步例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E9%94%81%E5%AE%9A"><span class="nav-number">3.4.</span> <span class="nav-text">Java 锁定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">3.5.</span> <span class="nav-text">同步的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%9A%84%E5%9D%97"><span class="nav-number">3.6.</span> <span class="nav-text">同步的块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E5%A4%9A%E6%95%B0%E7%B1%BB%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%90%8C%E6%AD%A5"><span class="nav-number">3.7.</span> <span class="nav-text">大多数类并没有同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98"><span class="nav-number">3.8.</span> <span class="nav-text">示例：简单的线程安全的高速缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">3.9.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt=""
+      src="/img/head.png">
+  <p class="site-author-name" itemprop="name"></p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/little-eight-china" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;little-eight-china" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/h295928126" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;h295928126" rel="noopener" target="_blank"><i class="fa fa-crosshairs fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      成人链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://acris.me/" title="https:&#x2F;&#x2F;acris.me&#x2F;" rel="noopener" target="_blank">Acris' Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">449k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:48</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
