@@ -551,7 +551,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 11:12:54" itemprop="dateModified" datetime="2021-09-30T11:12:54+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:26:31" itemprop="dateModified" datetime="2021-10-02T18:26:31+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -569,14 +569,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.8k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -588,14 +588,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h2><h3 id="什么是线程？"><a href="#什么是线程？" class="headerlink" title="什么是线程？"></a>什么是线程？</h3><p>几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。</p>
-<p>线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的<br>概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。 </p>
-<p>有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行路径，每个线程有它自己的堆栈、自己的程序计数器和自己的局部变量。但是，与分隔的进程相比，进程中的线程之间的隔离程度要小。它们共享内存、文件句柄和其它每个进程应有的状态。 </p>
-<p>进程可以支持多个线程，它们看似同时执行，但互相之间并不同步。一个进程中的多个线程共享相同的内存地址空间，这就意味着它们可以访问相同的变量和对象，而且它们从同一堆中分配对象。尽管这让线程之间共享信息变得更容易，但您必须小心，确保它们不会妨碍同一进程里的其它线程。</p>
-<p>Java 线程工具和 API 看似简单。但是，编写有效使用线程的复杂程序并不十分容易。因为有多个线程共存在相同的内存空间中并共享相同的变量，所以您必须小心，确保您的线程不会互相干扰。 </p>
-<h3 id="每个-Java-程序都使用线程"><a href="#每个-Java-程序都使用线程" class="headerlink" title="每个 Java 程序都使用线程"></a>每个 Java 程序都使用线程</h3><p>每个 Java 程序都至少有一个线程 — 主线程。当一个 Java 程序启动时，JVM 会创建主线程，并在该线程中调用程序的 main() 方法。 JVM 还创建了其它线程，您通常都看不到它们 — 例如，与垃圾收集、对象终止和其它 JVM 内务处理任务相关的线程。其它工具也创建线程，如 AWT（抽象窗口工具箱（Abstract Windowing Toolkit））或 Swing UI 工具箱、servlet 容器、应用程序服务器和 RMI（远程方法调用（Remote Method Invocation）） </p>
-<h3 id="Java-线程的风险"><a href="#Java-线程的风险" class="headerlink" title="Java 线程的风险"></a>Java 线程的风险</h3><p>虽然 Java 线程工具非常易于使用，但当我们创建多线程程序时，应该尽量避免一些风险。<br>当多个线程访问同一数据项（如静态字段、可全局访问对象的实例字段或共享集合）时，需要确保它们协调了对数据的访问，这样它们都可以看到数据的一致视图，而且相互不会干扰另一方的更改。<br>为了实现这个目的，Java 语言提供了两个关键字：synchronized 和 volatile。当从多个线程中访问变量时，必须确保对该访问正确地进行了同步。对于简单变量，将变量声明成volatile 也许就足够了，但在大多数情况下，需要使用同步。<br>如果将要使用同步来保护对共享变量的访问，那么必须确保在程序中所有访问该变量的地方都使用同步。</p>
-<p>虽然线程可以大大简化许多类型的应用程序，过度使用线程可能会危及程序的性能及其可维护性。<br>线程消耗了资源。因此，在不降低性能的情况下，可以创建的线程的数量是有限制的。 尤其在单处理器系统中，使用多个线程不会使主要消耗 CPU 资源的程序运行得更快。 </p>
+          <h2 id="线程基础"><a href="#线程基础" class="headerlink" title="线程基础"></a>线程基础</h2><h3 id="什么是线程？"><a href="#什么是线程？" class="headerlink" title="什么是线程？"></a>什么是线程？</h3><p>&ensp;&ensp;&ensp;&ensp;几乎每种操作系统都支持进程的概念 —— 进程就是在某种程度上相互隔离的、独立运行的程序。</p>
+<p>&ensp;&ensp;&ensp;&ensp;线程化是允许多个活动共存于一个进程中的工具。大多数现代的操作系统都支持线程，而且线程的概念以各种形式已存在了好多年。Java 是第一个在语言本身中显式地包含线程的主流编程语言，它没有把线程化看作是底层操作系统的工具。 </p>
+<p>&ensp;&ensp;&ensp;&ensp;有时候，线程也称作轻量级进程。就象进程一样，线程在程序中是独立的、并发的执行路径，每个线程有它自己的堆栈、自己的程序计数器和自己的局部变量。但是，与分隔的进程相比，进程中的线程之间的隔离程度要小。它们共享内存、文件句柄和其它每个进程应有的状态。 </p>
+<p>&ensp;&ensp;&ensp;&ensp;进程可以支持多个线程，它们看似同时执行，但互相之间并不同步。一个进程中的多个线程共享相同的内存地址空间，这就意味着它们可以访问相同的变量和对象，而且它们从同一堆中分配对象。尽管这让线程之间共享信息变得更容易，但您必须小心，确保它们不会妨碍同一进程里的其它线程。</p>
+<p>&ensp;&ensp;&ensp;&ensp;Java 线程工具和 API 看似简单。但是，编写有效使用线程的复杂程序并不十分容易。因为有多个线程共存在相同的内存空间中并共享相同的变量，所以您必须小心，确保您的线程不会互相干扰。 </p>
+<h3 id="每个-Java-程序都使用线程"><a href="#每个-Java-程序都使用线程" class="headerlink" title="每个 Java 程序都使用线程"></a>每个 Java 程序都使用线程</h3><p>&ensp;&ensp;&ensp;&ensp;每个 Java 程序都至少有一个线程 — 主线程。当一个 Java 程序启动时，JVM 会创建主线程，并在该线程中调用程序的 main() 方法。 JVM 还创建了其它线程，您通常都看不到它们 — 例如，与垃圾收集、对象终止和其它 JVM 内务处理任务相关的线程。其它工具也创建线程，如 AWT（抽象窗口工具箱（Abstract Windowing Toolkit））或 Swing UI 工具箱、servlet 容器、应用程序服务器和 RMI（远程方法调用（Remote Method Invocation）） </p>
+<h3 id="Java-线程的风险"><a href="#Java-线程的风险" class="headerlink" title="Java 线程的风险"></a>Java 线程的风险</h3><p>&ensp;&ensp;&ensp;&ensp;虽然 Java 线程工具非常易于使用，但当我们创建多线程程序时，应该尽量避免一些风险。<br>&ensp;&ensp;&ensp;&ensp;当多个线程访问同一数据项（如静态字段、可全局访问对象的实例字段或共享集合）时，需要确保它们协调了对数据的访问，这样它们都可以看到数据的一致视图，而且相互不会干扰另一方的更改。<br>&ensp;&ensp;&ensp;&ensp;为了实现这个目的，Java 语言提供了两个关键字：synchronized 和 volatile。当从多个线程中访问变量时，必须确保对该访问正确地进行了同步。对于简单变量，将变量声明成volatile 也许就足够了，但在大多数情况下，需要使用同步。<br>&ensp;&ensp;&ensp;&ensp;如果将要使用同步来保护对共享变量的访问，那么必须确保在程序中所有访问该变量的地方都使用同步。</p>
+<p>&ensp;&ensp;&ensp;&ensp;虽然线程可以大大简化许多类型的应用程序，过度使用线程可能会危及程序的性能及其可维护性。<br>&ensp;&ensp;&ensp;&ensp;线程消耗了资源。因此，在不降低性能的情况下，可以创建的线程的数量是有限制的。 尤其在单处理器系统中，使用多个线程不会使主要消耗 CPU 资源的程序运行得更快。 </p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/12/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" rel="contents">
@@ -1478,12 +1478,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">449k</span>
+    <span title="站点总字数">471k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:48</span>
+    <span title="站点阅读时长">7:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

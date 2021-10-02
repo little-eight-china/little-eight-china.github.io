@@ -214,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:15:09" itemprop="dateModified" datetime="2021-10-02T18:15:09+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,14 +232,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -251,7 +251,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="什么是-Kafka"><a href="#什么是-Kafka" class="headerlink" title="什么是 Kafka"></a>什么是 Kafka</h2><p>Kafka 是一个分布式的，支持多分区、多副本的分布式消息流平台，它同时也是一款开源的<strong>基于发布订阅模式的消息引擎系统，</strong>简单来说就是一个分布式消息队列。<br>在2.8版本之前，无论是Kafka 集群，还是consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性。2.8版本之后使用内嵌的KRaft作为zookeeper部分功能的替代品。<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/kafka%E7%9A%84%E4%B8%80%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/1.png"></p>
+          <h2 id="什么是-Kafka"><a href="#什么是-Kafka" class="headerlink" title="什么是 Kafka"></a>什么是 Kafka</h2><p>&ensp;&ensp;&ensp;&ensp;Kafka 是一个分布式的，支持多分区、多副本的分布式消息流平台，它同时也是一款开源的<strong>基于发布订阅模式的消息引擎系统，</strong>简单来说就是一个分布式消息队列。<br>&ensp;&ensp;&ensp;&ensp;在2.8版本之前，无论是Kafka 集群，还是consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性。2.8版本之后使用内嵌的KRaft作为zookeeper部分功能的替代品。<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/kafka%E7%9A%84%E4%B8%80%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/1.png"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/27/kafka%E7%9A%84%E4%B8%80%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/#more" rel="contents">
@@ -309,7 +309,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:37:52" itemprop="dateModified" datetime="2021-10-02T18:37:52+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -327,14 +327,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>54k</span>
+              <span>58k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>49 分钟</span>
+              <span>53 分钟</span>
             </span>
 
         </div>
@@ -348,7 +348,7 @@
       
           <pre><code>本文基于[凤凰架构](https://icyfenix.cn/)网站的基础上复制缩减而成。
 </code></pre>
-<h2 id="服务架构的的演进史"><a href="#服务架构的的演进史" class="headerlink" title="服务架构的的演进史"></a>服务架构的的演进史</h2><h3 id="原始分布式时代"><a href="#原始分布式时代" class="headerlink" title="原始分布式时代"></a>原始分布式时代</h3><p>在 20 世纪 70 年代末期到 80 年代初，计算机科学刚经历了从以大型机为主向以微型机为主的蜕变，计算机逐渐从一种存在于研究机构、实验室当中的科研设备，转变为存在于商业企业中的生产设备，甚至是面向家庭、个人用户的娱乐设备。<br>当时计算机硬件局促的运算处理能力，已直接妨碍到了在单台计算机上信息系统软件能够达到的最大规模。为突破硬件算力的限制，各个高校、研究机构、软硬件厂商开始分头探索，寻找使用多台计算机共同协作来支撑同一套软件系统运行的可行方案。这一阶段是对分布式架构最原始的探索，从结果来看，历史局限决定了它不可能一蹴而就地解决分布式的难题，但仅从过程来看，这个阶段的探索称得上成绩斐然。研究过程的很多中间成果都对今天计算机科学的诸多领域产生了深远的影响，直接牵引了后续软件架构的演化进程。譬如<strong>NCA（Network Computing Architecture）</strong>是未来远程服务调用的雏形，卡内基·梅隆大学提出的<strong>AFS 文件系统（Andrew File System）</strong>是日后分布式文件系统的最早实现；麻省理工学院提出的<strong>Kerberos 协议</strong>是服务认证和访问控制的基础性协议，是分布式服务安全性的重要支撑，目前仍被用于实现包括 Windows 和 MacOS 在内众多操作系统的登录、认证功能，等等。<br>​
+<h2 id="服务架构的的演进史"><a href="#服务架构的的演进史" class="headerlink" title="服务架构的的演进史"></a>服务架构的的演进史</h2><h3 id="原始分布式时代"><a href="#原始分布式时代" class="headerlink" title="原始分布式时代"></a>原始分布式时代</h3><p>&ensp;&ensp;&ensp;&ensp;在 20 世纪 70 年代末期到 80 年代初，计算机科学刚经历了从以大型机为主向以微型机为主的蜕变，计算机逐渐从一种存在于研究机构、实验室当中的科研设备，转变为存在于商业企业中的生产设备，甚至是面向家庭、个人用户的娱乐设备。<br>&ensp;&ensp;&ensp;&ensp;当时计算机硬件局促的运算处理能力，已直接妨碍到了在单台计算机上信息系统软件能够达到的最大规模。为突破硬件算力的限制，各个高校、研究机构、软硬件厂商开始分头探索，寻找使用多台计算机共同协作来支撑同一套软件系统运行的可行方案。这一阶段是对分布式架构最原始的探索，从结果来看，历史局限决定了它不可能一蹴而就地解决分布式的难题，但仅从过程来看，这个阶段的探索称得上成绩斐然。研究过程的很多中间成果都对今天计算机科学的诸多领域产生了深远的影响，直接牵引了后续软件架构的演化进程。譬如<strong>NCA（Network Computing Architecture）</strong>是未来远程服务调用的雏形，卡内基·梅隆大学提出的<strong>AFS 文件系统（Andrew File System）</strong>是日后分布式文件系统的最早实现；麻省理工学院提出的<strong>Kerberos 协议</strong>是服务认证和访问控制的基础性协议，是分布式服务安全性的重要支撑，目前仍被用于实现包括 Windows 和 MacOS 在内众多操作系统的登录、认证功能，等等。<br>​
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/10/%E5%AF%B9%E4%BA%8E%E6%9E%B6%E6%9E%84%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E8%AE%A8/#more" rel="contents">
@@ -406,7 +406,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:37:52" itemprop="dateModified" datetime="2021-10-02T18:37:52+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -424,14 +424,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -443,7 +443,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="redis的官网简介"><a href="#redis的官网简介" class="headerlink" title="redis的官网简介"></a>redis的官网简介</h2><p>Redis 是一个开放源码(BSD 许可)、内存中的数据结构存储，用作数据库、缓存和消息代理。Redis 提供数据结构，例如string字符串、hash散列、list列表、set集合、sorted set带有范围查询的排序集、bitmaps位图、hyperloglogs超级日志、geospatial indexes地理空间索引、 streams流。Redis 具有内置的复制、 Lua 脚本、 LRU 收回、事务和不同级别的磁盘持久性，并通过 Redis Sentinel 提供高可用性服务，并通过 Redis Cluster 提供自动分区。<br>您可以对这些类型运行原子操作，比如附加到字符串; 在散列中递增值; 将元素推入列表; 计算集合的交集、并集和差集; 或者获得排序集中排名最高的成员。<br>为了获得最佳性能，Redis 使用内存中的数据集。根据您的用例，您可以通过定期将数据集转储到磁盘或将每个命令附加到基于磁盘的日志中来持久化数据。如果您只需要一个功能丰富的网络化内存缓存，那么还可以禁用持久性。<br>Redis 还支持异步复制，具有非常快的非阻塞第一同步，自动重连接和部分重新同步的网络分割。<br>其他功能包括:</p>
+          <h2 id="redis的官网简介"><a href="#redis的官网简介" class="headerlink" title="redis的官网简介"></a>redis的官网简介</h2><p>&ensp;&ensp;&ensp;&ensp;Redis 是一个开放源码(BSD 许可)、内存中的数据结构存储，用作数据库、缓存和消息代理。Redis 提供数据结构，例如string字符串、hash散列、list列表、set集合、sorted set带有范围查询的排序集、bitmaps位图、hyperloglogs超级日志、geospatial indexes地理空间索引、 streams流。Redis 具有内置的复制、 Lua 脚本、 LRU 收回、事务和不同级别的磁盘持久性，并通过 Redis Sentinel 提供高可用性服务，并通过 Redis Cluster 提供自动分区。<br>&ensp;&ensp;&ensp;&ensp;您可以对这些类型运行原子操作，比如附加到字符串; 在散列中递增值; 将元素推入列表; 计算集合的交集、并集和差集; 或者获得排序集中排名最高的成员。<br>&ensp;&ensp;&ensp;&ensp;为了获得最佳性能，Redis 使用内存中的数据集。根据您的用例，您可以通过定期将数据集转储到磁盘或将每个命令附加到基于磁盘的日志中来持久化数据。如果您只需要一个功能丰富的网络化内存缓存，那么还可以禁用持久性。<br>&ensp;&ensp;&ensp;&ensp;Redis 还支持异步复制，具有非常快的非阻塞第一同步，自动重连接和部分重新同步的网络分割。<br>&ensp;&ensp;&ensp;&ensp;其他功能包括:</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/06/redis%E4%B8%80%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/#more" rel="contents">
@@ -501,7 +501,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:37:52" itemprop="dateModified" datetime="2021-10-02T18:37:52+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -519,7 +519,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>935</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -538,7 +538,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在高并发或者是安全要求下，后端接口会有多次执行的结果与一次执行的结果要一致的要求，这种接口就叫幂等性接口，需要用到幂等性的接口比较常见的就是用户下单支付等，防止出现重试时对业务造成巨大灾害的危险。下文为设计方案的各个要点。</p>
+          <p>&ensp;&ensp;&ensp;&ensp;在高并发或者是安全要求下，后端接口会有多次执行的结果与一次执行的结果要一致的要求，这种接口就叫幂等性接口，需要用到幂等性的接口比较常见的就是用户下单支付等，防止出现重试时对业务造成巨大灾害的危险。下文为设计方案的各个要点。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/03/%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%B9%82%E7%AD%89%E6%80%A7%E8%AE%BE%E8%AE%A1/#more" rel="contents">
@@ -596,7 +596,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:12:42" itemprop="dateModified" datetime="2021-09-30T12:12:42+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:26:31" itemprop="dateModified" datetime="2021-10-02T18:26:31+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -614,7 +614,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -633,7 +633,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="线程池是什么"><a href="#线程池是什么" class="headerlink" title="线程池是什么"></a>线程池是什么</h1><p>线程池是一种基于池化思想管理线程的工具,是存储线程的容器,线程事先创建好后放入线程池,当有任务需要执行时,直接从线程池拿空闲线程使用,使用完毕后归还给线程池.</p>
+          <h1 id="线程池是什么"><a href="#线程池是什么" class="headerlink" title="线程池是什么"></a>线程池是什么</h1><p>&ensp;&ensp;&ensp;&ensp;线程池是一种基于池化思想管理线程的工具,是存储线程的容器,线程事先创建好后放入线程池,当有任务需要执行时,直接从线程池拿空闲线程使用,使用完毕后归还给线程池.</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/02/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/#more" rel="contents">
@@ -691,7 +691,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:37:51" itemprop="dateModified" datetime="2021-10-02T18:37:51+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -709,14 +709,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -728,7 +728,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>搜索浏览器自身的dns缓存，找不到就搜索系统的缓存，还是找不到就去hosts里找，还是找不到就去域名服务器里找。搜索成功拿到ip的话，接下来就是tcp连接。<br>​
+          <h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>&ensp;&ensp;&ensp;&ensp;搜索浏览器自身的dns缓存，找不到就搜索系统的缓存，还是找不到就去hosts里找，还是找不到就去域名服务器里找。搜索成功拿到ip的话，接下来就是tcp连接。<br>​
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/02/%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E7%9A%84HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/#more" rel="contents">
@@ -786,7 +786,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:26:31" itemprop="dateModified" datetime="2021-10-02T18:26:31+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -804,14 +804,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -823,8 +823,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>消息中间件是分布式系统常用的组件，无论是异步化、解耦、削峰等都有广泛的应用价值。</p>
-<p>我们通常会认为，消息中间件是一个可靠的组件——这里所谓的可靠是指，只要我把消息成功投递到了消息中间件，消息就不会丢。<br>即消息肯定会至少保证消息能被消费者成功消费一次，这是消息中间件最基本的特性之一。<br>也就是我们常说的“AT LEAST ONCE”，即消息至少会被“成功消费一遍”。<br><strong>举个例子</strong>，一个消息 M 发送到了消息中间件，消息投递到了消费程序 A。A 接受到了消息，然后进行消费。但在消费到一半的时候程序重启了，这时候这个消息并没有标记为消费成功，这个消息还会继续投递给这个消费者，直到其消费成功了，消息中间件才会停止投递。<br><strong>然而这种可靠的特性会导致消息可能被多次地投递，</strong>这时候就可能出现程序 A 接受到这个消息 M 并完成消费逻辑之后，正想通知消息中间件“我已经消费成功了”的时候，程序就重启了，那么对于消息中间件来说，这个消息并没有成功消费过，所以它还会继续投递，但这时候对于应用程序 A 来说，看起来就是这个消息明明消费成功了，但是消息中间件还在重复投递。</p>
+          <p>&ensp;&ensp;&ensp;&ensp;消息中间件是分布式系统常用的组件，无论是异步化、解耦、削峰等都有广泛的应用价值。</p>
+<p>&ensp;&ensp;&ensp;&ensp;我们通常会认为，消息中间件是一个可靠的组件——这里所谓的可靠是指，只要我把消息成功投递到了消息中间件，消息就不会丢。<br>&ensp;&ensp;&ensp;&ensp;即消息肯定会至少保证消息能被消费者成功消费一次，这是消息中间件最基本的特性之一。<br>&ensp;&ensp;&ensp;&ensp;也就是我们常说的“AT LEAST ONCE”，即消息至少会被“成功消费一遍”。<br><strong>举个例子</strong>，一个消息 M 发送到了消息中间件，消息投递到了消费程序 A。A 接受到了消息，然后进行消费。但在消费到一半的时候程序重启了，这时候这个消息并没有标记为消费成功，这个消息还会继续投递给这个消费者，直到其消费成功了，消息中间件才会停止投递。<br><strong>然而这种可靠的特性会导致消息可能被多次地投递，</strong>这时候就可能出现程序 A 接受到这个消息 M 并完成消费逻辑之后，正想通知消息中间件“我已经消费成功了”的时候，程序就重启了，那么对于消息中间件来说，这个消息并没有成功消费过，所以它还会继续投递，但这时候对于应用程序 A 来说，看起来就是这个消息明明消费成功了，但是消息中间件还在重复投递。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/08/30/MQ%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9/#more" rel="contents">
@@ -882,7 +882,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:37:51" itemprop="dateModified" datetime="2021-10-02T18:37:51+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -900,14 +900,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>31k</span>
+              <span>34k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>28 分钟</span>
+              <span>31 分钟</span>
             </span>
 
         </div>
@@ -919,7 +919,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>这是官网的一个架构图，总体是可以分为四层的。<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/mysql%E4%B8%A4%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/1.png"></p>
+          <h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>&ensp;&ensp;&ensp;&ensp;这是官网的一个架构图，总体是可以分为四层的。<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/mysql%E4%B8%A4%E4%B8%87%E5%AD%97%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/1.png"></p>
 <ul>
 <li><strong>连接层</strong>：最上层是一些客户端和连接服务。<strong>主要完成一些类似于连接处理、授权认证、及相关的安全方案</strong>。在该层上引入了线程池的概念，为通过认证安全接入的客户端提供线程。同样在该层上可以实现基于SSL的安全链接。服务器也会为安全接入的每个客户端验证它所具有的操作权限。</li>
 <li><strong>服务层</strong>：第二层服务层，主要完成大部分的核心服务功能， 包括查询解析、分析、优化、缓存、以及所有的内置函数，所有跨存储引擎的功能也都在这一层实现，包括触发器、存储过程、视图等</li>
@@ -982,7 +982,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-30 12:11:49" itemprop="dateModified" datetime="2021-09-30T12:11:49+08:00">2021-09-30</time>
+                <time title="修改时间：2021-10-02 18:26:31" itemprop="dateModified" datetime="2021-10-02T18:26:31+08:00">2021-10-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1000,14 +1000,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -1019,8 +1019,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Netty 是一个 NIO 客户机服务器框架，它支持快速简单地开发网络应用程序，如协议服务器和客户机。它极大地简化了网络编程，如 TCP 和 UDP 套接字服务器。经过多年的发展它已成为构建一个java网络生态的首选架构，在一些开源的项目中可见。<br>下面是netty框架的组成：<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/netty%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/1.png"></p>
-<p>Netty是一个非阻塞、事件驱动的网络框架，整个Netty的api都是异步设计，对网络应用来讲，io一般是性能的瓶颈，使用异步io可以较大程度上提高程序性能，对于熟悉多线程编程的读者可能会需要同步代码。这样的方式不好，因为同步会影响程序的性能，Netty的设计保证程序处理事件不会有同步。</p>
+          <h2 id="什么是netty"><a href="#什么是netty" class="headerlink" title="什么是netty"></a>什么是netty</h2><p>&ensp;&ensp;&ensp;&ensp;netty是一个 nio 客户机服务器框架，它支持快速简单地开发网络应用程序，如协议服务器和客户机。它极大地简化了网络编程，如 TCP 和 UDP 套接字服务器。经过多年的发展它已成为构建一个java网络生态的首选架构，在一些开源的项目中可见。<br>&ensp;&ensp;&ensp;&ensp;netty是一个异步、事件驱动的网络框架，整个netty的api都是异步设计，对网络应用来讲，io一般是性能的瓶颈，使用异步io可以较大程度上提高程序性能。<br>&ensp;&ensp;&ensp;&ensp;下面是官网的netty框架的图：<br><img data-src="https://gitee.com/littleeight/blog-images/raw/master/netty%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/1.png"><br>​
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/07/02/Netty%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/#more" rel="contents">
@@ -1277,12 +1276,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">449k</span>
+    <span title="站点总字数">471k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:48</span>
+    <span title="站点阅读时长">7:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
